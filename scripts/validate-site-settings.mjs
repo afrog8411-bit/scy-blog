@@ -9,26 +9,76 @@ const settingsPath = path.join(projectRoot, "src", "data", "site-settings.json")
 assert.ok(fs.existsSync(settingsPath), "src/data/site-settings.json is required");
 
 const settings = JSON.parse(fs.readFileSync(settingsPath, "utf8"));
-assert.equal(typeof settings.shared?.brand, "string", "shared.brand is required");
-assert.equal(typeof settings.shared?.profileImage, "string", "shared.profileImage is required");
+function requireObject(value, pathName) {
+  assert.ok(value && typeof value === "object" && !Array.isArray(value), `${pathName} must be an object`);
+}
 
-const localeSections = ["navigation", "common", "home", "projects", "services", "cv", "blog", "store", "notFound"];
+function requireOwn(value, key, pathName) {
+  assert.ok(Object.hasOwn(value, key), `${pathName}.${key} is required`);
+  return value[key];
+}
+
+function requireString(value, pathName) {
+  assert.equal(typeof value, "string", `${pathName} must be a string`);
+}
+
+function requireStringFields(value, keys, pathName) {
+  requireObject(value, pathName);
+  for (const key of keys) {
+    requireString(requireOwn(value, key, pathName), `${pathName}.${key}`);
+  }
+}
+
+function requireStringArray(value, pathName) {
+  assert.ok(Array.isArray(value), `${pathName} must be an array`);
+  value.forEach((item, index) => requireString(item, `${pathName}[${index}]`));
+}
+
+function requireObjectArray(value, keys, pathName) {
+  assert.ok(Array.isArray(value), `${pathName} must be an array`);
+  value.forEach((item, index) => requireStringFields(item, keys, `${pathName}[${index}]`));
+}
+
+function validateLocale(locale) {
+  const section = settings[locale];
+  const pathName = locale;
+
+  requireObject(section, pathName);
+  requireStringFields(section, ["siteTitle", "siteDescription"], pathName);
+  requireStringFields(section.navigation, ["home", "projects", "services", "store", "blog", "cv", "contact"], `${pathName}.navigation`);
+  requireStringFields(section.common, [
+    "recentPosts", "olderPosts", "previousPage", "nextPage", "noPostsTitle", "noPostsMessage",
+    "lastUpdated", "buyNow", "home", "notFoundMessage", "developedBy", "usingTemplate",
+  ], `${pathName}.common`);
+  requireStringFields(section.home, [
+    "greeting", "name", "headline", "intro", "connectLabel", "connectUrl", "templateLabel",
+    "templateUrl", "projectsHeading", "blogHeading",
+  ], `${pathName}.home`);
+
+  requireStringFields(section.projects, ["title", "heading"], `${pathName}.projects`);
+  requireObjectArray(section.projects.items, ["title", "image", "description", "url"], `${pathName}.projects.items`);
+  requireStringFields(section.services, ["title", "heading"], `${pathName}.services`);
+  requireObjectArray(section.services.items, ["title", "image", "description", "url"], `${pathName}.services.items`);
+
+  requireStringFields(section.cv, [
+    "title", "profileHeading", "profile", "educationHeading", "experienceHeading", "certificationsHeading", "skillsHeading",
+  ], `${pathName}.cv`);
+  requireObjectArray(section.cv.education, ["title", "subtitle"], `${pathName}.cv.education`);
+  requireObjectArray(section.cv.experience, ["title", "subtitle", "description"], `${pathName}.cv.experience`);
+  requireObjectArray(section.cv.certifications, ["name", "url"], `${pathName}.cv.certifications`);
+  requireStringArray(section.cv.skills, `${pathName}.cv.skills`);
+
+  requireStringFields(section.blog, ["title"], `${pathName}.blog`);
+  requireStringFields(section.store, ["title"], `${pathName}.store`);
+  requireStringFields(section.notFound, ["title", "homeLabel"], `${pathName}.notFound`);
+}
+
+requireObject(settings.shared, "shared");
+requireStringFields(settings.shared, ["brand", "profileImage", "contactEmail"], "shared");
+requireStringFields(settings.shared.social, ["support", "github", "twitter", "linkedin", "rss"], "shared.social");
 
 for (const locale of ["zh", "en"]) {
-  const section = settings[locale];
-  assert.equal(typeof section?.siteTitle, "string", `${locale}.siteTitle is required`);
-  assert.equal(typeof section?.siteDescription, "string", `${locale}.siteDescription is required`);
-
-  for (const key of localeSections) {
-    assert.equal(typeof section[key], "object", `${locale}.${key} is required`);
-  }
-
-  assert.ok(Array.isArray(section.projects.items), `${locale}.projects.items must be an array`);
-  assert.ok(Array.isArray(section.services.items), `${locale}.services.items must be an array`);
-  assert.ok(Array.isArray(section.cv.education), `${locale}.cv.education must be an array`);
-  assert.ok(Array.isArray(section.cv.experience), `${locale}.cv.experience must be an array`);
-  assert.ok(Array.isArray(section.cv.certifications), `${locale}.cv.certifications must be an array`);
-  assert.ok(Array.isArray(section.cv.skills), `${locale}.cv.skills must be an array`);
+  validateLocale(locale);
 }
 
 const pairedArrays = [

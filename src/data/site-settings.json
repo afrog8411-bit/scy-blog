@@ -147,7 +147,7 @@
       ]
     },
     "services": {
-      "title": "Projects",
+      "title": "Services",
       "heading": "Services Header",
       "items": [
         { "title": "Service 1", "image": "/post_img.webp", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "url": "#", "badge": "NEW" },
