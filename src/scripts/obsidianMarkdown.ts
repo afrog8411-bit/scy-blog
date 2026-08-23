@@ -6,8 +6,8 @@
  * 3. Obsidian Highlights (==text==)
  * 4. Obsidian Inline Tags (#tag, #nested/tag) linking to tag archives
  * 5. Obsidian Wikilinks ([[Note]] / [[Note|Alias]] / [[#Heading]]) and Embeds (![[image.png|300]])
- * 6. Image Resizing & Alignment (alt="description|300", "alt|300x200", "alt|center")
- * 7. Image Lightbox with zoom and captions
+ * 6. Image Resizing & Alignment (alt="description|300", "alt|300x200", "alt|center") with Mobile Protection
+ * 7. Mobile-Optimized Image Lightbox with zoom and captions
  * 8. External link indicators (target="_blank" + ↗ icon)
  * 9. Code block headers (Mac dots, language badge, copy button)
  * 10. TOC active heading scroll tracking
@@ -200,7 +200,6 @@ const CALLOUT_TYPES: Record<string, CalloutConfig> = {
  * 1. Transform blockquotes into Obsidian Callouts (Support Bottom-Up Nesting & +/- Folds)
  */
 export function initObsidianCallouts(): void {
-  // Bottom-up traversal to allow clean nested callout conversion
   const blockquotes = Array.from(
     document.querySelectorAll<HTMLElement>("article .article-body blockquote")
   ).reverse();
@@ -208,17 +207,15 @@ export function initObsidianCallouts(): void {
   blockquotes.forEach((blockquote) => {
     if (blockquote.dataset.calloutTransformed === "true") return;
 
-    // Find the first paragraph or direct text inside blockquote
     const firstP = blockquote.querySelector("p") || blockquote;
     const text = firstP.textContent?.trim() || "";
 
-    // Match [!type], [!type]+, [!type]-, [!type] Custom Title
     const calloutMatch = text.match(/^\[!([a-zA-Z_-]+)\]([+-]?)(.*)$/m);
 
     if (calloutMatch) {
       blockquote.dataset.calloutTransformed = "true";
       const rawType = calloutMatch[1].toLowerCase();
-      const collapseSign = calloutMatch[2]; // "+" = open, "-" = closed, "" = static div
+      const collapseSign = calloutMatch[2];
       const customTitle = calloutMatch[3]?.trim();
 
       const config = CALLOUT_TYPES[rawType] || {
@@ -230,7 +227,6 @@ export function initObsidianCallouts(): void {
 
       const title = customTitle || config.title;
 
-      // Clean the [!TYPE] marker from the first paragraph's HTML
       if (firstP.innerHTML) {
         const cleanedHtml = firstP.innerHTML
           .replace(/^\[!([a-zA-Z_-]+)\]([+-]?)(.*)(<br\s*\/?>|\n)?/im, "")
@@ -361,7 +357,6 @@ export function initObsidianInlineTags(): void {
   const walker = document.createTreeWalker(articleBody, NodeFilter.SHOW_TEXT);
   const nodesToReplace: { node: Text; html: string }[] = [];
 
-  // Match #tag or #nested/tag preceded by start/whitespace and followed by whitespace/punctuation
   const tagRegex = /(^|\s)#([\u4e00-\u9fa5a-zA-Z0-9_-]+(?:\/[\u4e00-\u9fa5a-zA-Z0-9_-]+)*)(?=\s|[.,;:!?，。！？、）]|$)/g;
 
   let node = walker.nextNode() as Text | null;
@@ -375,7 +370,6 @@ export function initObsidianInlineTags(): void {
       node.textContent &&
       tagRegex.test(node.textContent)
     ) {
-      // Reset regex index before replace
       tagRegex.lastIndex = 0;
       const html = node.textContent.replace(
         tagRegex,
@@ -403,9 +397,7 @@ export function initObsidianWikilinks(): void {
   const walker = document.createTreeWalker(articleBody, NodeFilter.SHOW_TEXT);
   const nodesToReplace: { node: Text; html: string }[] = [];
 
-  // Regex for embeds: ![[filename|size]]
   const embedRegex = /!\[\[([^|\]\n]+)(?:\|([^\]\n]+))?\]\]/g;
-  // Regex for wikilinks: [[target#heading|alias]]
   const wikilinkRegex = /\[\[([^|\]\n#]+)?(?:#([^|\]\n]+))?(?:\|([^\]\n]+))?\]\]/g;
 
   let node = walker.nextNode() as Text | null;
@@ -422,15 +414,13 @@ export function initObsidianWikilinks(): void {
 
       let html = node.textContent;
 
-      // Replace embeds: ![[image.png|300]]
       html = html.replace(embedRegex, (_, file, size) => {
         const filename = file.trim();
         const src = filename.startsWith("/") ? filename : `/uploads/${filename}`;
         const sizeAttr = size ? `data-size="${size.trim()}"` : "";
-        return `<img src="${src}" alt="${filename}" class="obsidian-embed-img rounded-xl shadow-md my-4" ${sizeAttr} />`;
+        return `<img src="${src}" alt="${filename}" class="obsidian-embed-img rounded-xl shadow-md my-4 max-w-full h-auto block mx-auto" ${sizeAttr} />`;
       });
 
-      // Replace wikilinks: [[Note|Alias]] or [[#Heading]]
       html = html.replace(wikilinkRegex, (_, target, heading, alias) => {
         const targetClean = target?.trim() || "";
         const headingClean = heading?.trim() || "";
@@ -461,10 +451,11 @@ export function initObsidianWikilinks(): void {
 }
 
 /**
- * 6. Image Resizing & Alignment Support (alt="desc|300", "alt|300x200", "alt|center|300", etc.)
+ * 6. Image Resizing & Alignment Support with Responsive Mobile Safeguards
  */
 export function initImageResizeAndAlignment(): void {
   const images = document.querySelectorAll<HTMLImageElement>("article .article-body img");
+  const isMobile = window.innerWidth < 640;
 
   images.forEach((img) => {
     if (img.dataset.resizeProcessed === "true") return;
@@ -473,6 +464,10 @@ export function initImageResizeAndAlignment(): void {
     const alt = img.getAttribute("alt") || "";
     const sizeData = img.dataset.size || "";
     const rawMeta = sizeData || (alt.includes("|") ? alt.split("|").slice(1).join("|") : "");
+
+    // Global safety for all markdown images
+    img.style.maxWidth = "100%";
+    img.style.height = "auto";
 
     if (rawMeta) {
       const parts = rawMeta.toLowerCase().split("|").map((p) => p.trim());
@@ -492,34 +487,49 @@ export function initImageResizeAndAlignment(): void {
         }
       }
 
-      if (width) {
-        img.style.width = width;
-        img.style.maxWidth = "100%";
-      }
-      if (height) {
-        img.style.height = height;
-        img.style.objectFit = "cover";
-      }
+      if (!isMobile) {
+        // Desktop / Tablet sizing and floats
+        if (width) {
+          img.style.width = width;
+        }
+        if (height) {
+          img.style.height = height;
+          img.style.objectFit = "cover";
+        }
 
-      if (alignment === "center") {
+        if (alignment === "center") {
+          img.style.display = "block";
+          img.style.marginLeft = "auto";
+          img.style.marginRight = "auto";
+        } else if (alignment === "left") {
+          img.style.float = "left";
+          img.style.marginRight = "1.25rem";
+          img.style.marginBottom = "0.75rem";
+          img.style.clear = "left";
+        } else if (alignment === "right") {
+          img.style.float = "right";
+          img.style.marginLeft = "1.25rem";
+          img.style.marginBottom = "0.75rem";
+          img.style.clear = "right";
+        }
+      } else {
+        // Mobile-friendly: Center and full width, prevent cramped side text
         img.style.display = "block";
         img.style.marginLeft = "auto";
         img.style.marginRight = "auto";
-      } else if (alignment === "left") {
-        img.style.float = "left";
-        img.style.marginRight = "1.25rem";
-        img.style.marginBottom = "0.75rem";
-        img.style.clear = "left";
-      } else if (alignment === "right") {
-        img.style.float = "right";
-        img.style.marginLeft = "1.25rem";
-        img.style.marginBottom = "0.75rem";
-        img.style.clear = "right";
+        img.style.float = "none";
+        if (width && parseInt(width) < window.innerWidth - 40) {
+          img.style.width = width;
+        }
       }
 
-      // Clean the alt description so it only shows real caption text
+      // Clean alt description
       const cleanAlt = alt.includes("|") ? alt.split("|")[0].trim() : alt;
       img.setAttribute("alt", cleanAlt);
+    } else {
+      img.style.display = "block";
+      img.style.marginLeft = "auto";
+      img.style.marginRight = "auto";
     }
   });
 }
@@ -591,7 +601,7 @@ export function initCodeBlockHeaders(): void {
 }
 
 /**
- * 9. Image Lightbox Modal
+ * 9. Mobile-Optimized Image Lightbox Modal
  */
 export function initImageLightbox(): void {
   let lightbox = document.getElementById("image-lightbox");
@@ -600,14 +610,14 @@ export function initImageLightbox(): void {
     lightbox = document.createElement("div");
     lightbox.id = "image-lightbox";
     lightbox.className =
-      "fixed inset-0 z-[100] hidden flex-col items-center justify-center bg-black/85 backdrop-blur-md p-4 transition-opacity duration-300 opacity-0 cursor-zoom-out";
+      "fixed inset-0 z-[100] hidden flex-col items-center justify-center bg-black/90 backdrop-blur-md p-3 sm:p-6 transition-opacity duration-300 opacity-0 cursor-zoom-out select-none";
     lightbox.innerHTML = `
       <div class="relative max-w-5xl max-h-[90vh] flex flex-col items-center justify-center pointer-events-auto">
-        <img id="lightbox-img" class="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl transition-transform duration-300 scale-95" src="" alt="" />
-        <p id="lightbox-caption" class="text-sm text-white/80 mt-3 text-center font-medium max-w-lg"></p>
+        <img id="lightbox-img" class="max-w-[94vw] max-h-[78vh] sm:max-w-5xl sm:max-h-[85vh] object-contain rounded-xl shadow-2xl transition-transform duration-300 scale-95" src="" alt="" />
+        <p id="lightbox-caption" class="text-xs sm:text-sm text-white/85 mt-3 text-center font-medium max-w-md px-2 line-clamp-2"></p>
       </div>
-      <button type="button" id="lightbox-close" class="absolute top-4 right-4 text-white/80 hover:text-white p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors" aria-label="Close image preview">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      <button type="button" id="lightbox-close" class="absolute top-3 right-3 sm:top-5 sm:right-5 w-10 h-10 flex items-center justify-center text-white/90 hover:text-white p-2.5 rounded-full bg-white/15 hover:bg-white/25 active:scale-95 transition-all shadow-lg z-50 cursor-pointer" aria-label="Close image preview">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>
     `;
     document.body.appendChild(lightbox);
@@ -718,25 +728,15 @@ export function initTocScrollSpy(): void {
  * Run all Obsidian Markdown initializers
  */
 export function setupAllMarkdownEnhancements(): void {
-  // Step 1: Strip internal comments
   initObsidianComments();
-  // Step 2: Transform callouts (with nesting support)
   initObsidianCallouts();
-  // Step 3: Transform highlights
   initObsidianHighlights();
-  // Step 4: Transform inline tags
   initObsidianInlineTags();
-  // Step 5: Transform wikilinks and embeds
   initObsidianWikilinks();
-  // Step 6: Image resize & alignment
   initImageResizeAndAlignment();
-  // Step 7: External links
   initExternalLinks();
-  // Step 8: Code blocks
   initCodeBlockHeaders();
-  // Step 9: Lightbox
   initImageLightbox();
-  // Step 10: TOC spy
   initTocScrollSpy();
 }
 
