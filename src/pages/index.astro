@@ -15,78 +15,78 @@ const lastPosts = posts.slice(0, 4);
 
 <BaseLayout sideBarActiveItemID="home">
   <!-- Hero Section -->
-  <div class="pb-8 mt-2">
+  <div class="pb-6 sm:pb-8 mt-1 sm:mt-2">
     {isLocalizedTextAvailable(home.greeting) && (
-      <div class="text-sm font-mono tracking-wider uppercase text-primary font-semibold mb-2 flex items-center gap-2">
+      <div class="text-xs sm:text-sm font-mono tracking-wider uppercase text-primary font-semibold mb-1.5 sm:mb-2 flex items-center gap-2">
         <span class="inline-block w-2 h-2 rounded-full bg-primary animate-pulse"></span>
         <LocalizedText value={home.greeting} />
       </div>
     )}
 
-    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-base-content leading-tight">
+    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-base-content leading-tight">
       <span class="bg-gradient-to-r from-base-content via-base-content/90 to-base-content/70 bg-clip-text">
         <LocalizedText value={home.name} />
       </span>
     </h1>
 
-    <div class="text-xl sm:text-2xl py-3 font-semibold text-base-content/85 tracking-tight flex items-center gap-2">
+    <div class="text-lg sm:text-xl md:text-2xl py-2 sm:py-3 font-semibold text-base-content/85 tracking-tight flex items-center gap-1.5 sm:gap-2">
       <span class="text-primary/70 font-mono">&gt;</span>
       <LocalizedText value={home.headline} />
     </div>
 
     {isLocalizedTextAvailable(home.intro) && (
-      <div class="py-2 text-base sm:text-lg text-base-content/70 leading-relaxed max-w-2xl">
+      <div class="py-2 text-sm sm:text-base md:text-lg text-base-content/70 leading-relaxed max-w-2xl">
         <LocalizedText value={home.intro} />
       </div>
     )}
 
     <!-- Hacker Terminal Snippet Card -->
-    <div class="mt-6 mb-4 rounded-2xl border border-base-content/15 bg-base-200/50 backdrop-blur-md overflow-hidden shadow-sm hover:border-primary/30 transition-all duration-300 group">
-      <div class="bg-base-300/60 px-4 py-2.5 flex items-center justify-between border-b border-base-content/10 select-none">
-        <div class="flex items-center gap-2">
-          <span class="w-3 h-3 rounded-full bg-error/80 inline-block"></span>
-          <span class="w-3 h-3 rounded-full bg-warning/80 inline-block"></span>
-          <span class="w-3 h-3 rounded-full bg-success/80 inline-block"></span>
-          <span class="ml-2 text-xs font-mono text-base-content/50 font-medium">afrog@workspace:~</span>
+    <div class="mt-4 sm:mt-6 mb-3 sm:mb-4 rounded-xl sm:rounded-2xl border border-base-content/15 bg-base-200/50 backdrop-blur-md overflow-hidden shadow-sm hover:border-primary/30 transition-all duration-300 group">
+      <div class="bg-base-300/60 px-3.5 py-2 sm:px-4 sm:py-2.5 flex items-center justify-between border-b border-base-content/10 select-none">
+        <div class="flex items-center gap-1.5 sm:gap-2">
+          <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-error/80 inline-block"></span>
+          <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-warning/80 inline-block"></span>
+          <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-success/80 inline-block"></span>
+          <span class="ml-1.5 sm:ml-2 text-[11px] sm:text-xs font-mono text-base-content/50 font-medium">afrog@workspace:~</span>
         </div>
-        <div class="text-[11px] font-mono text-base-content/40 uppercase tracking-wider">zsh / dev</div>
+        <div class="text-[10px] sm:text-[11px] font-mono text-base-content/40 uppercase tracking-wider">zsh / dev</div>
       </div>
-      <div class="p-4 sm:p-5 font-mono text-xs sm:text-sm text-base-content/80 leading-relaxed space-y-2.5 overflow-x-auto">
-        <div class="flex items-center gap-2">
+      <div class="p-3.5 sm:p-5 font-mono text-xs sm:text-sm text-base-content/80 leading-relaxed space-y-2 sm:space-y-2.5 overflow-x-auto">
+        <div class="flex items-center gap-1.5 sm:gap-2">
           <span class="text-primary font-bold">❯</span>
           <span class="text-base-content/90">whoami</span>
         </div>
-        <div class="pl-4 text-base-content/65 border-l border-primary/30">
+        <div class="pl-3 sm:pl-4 text-base-content/65 border-l border-primary/30 text-[11px] sm:text-xs">
           施辰阳 (afrog) · 独立创造者 · 终身学习者
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1.5 sm:gap-2">
           <span class="text-primary font-bold">❯</span>
           <span class="text-base-content/90">cat manifesto.txt</span>
         </div>
-        <div class="pl-4 text-base-content/65 border-l border-primary/30">
+        <div class="pl-3 sm:pl-4 text-base-content/65 border-l border-primary/30 text-[11px] sm:text-xs">
           "人为自己立规矩然后活着。"
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1.5 sm:gap-2">
           <span class="text-primary font-bold">❯</span>
           <span class="text-base-content/90">stack --favorites</span>
         </div>
-        <div class="pl-4 flex flex-wrap gap-2 pt-0.5">
-          <span class="px-2 py-0.5 rounded-md bg-primary/10 text-primary border border-primary/20 text-[11px]">Astro 4</span>
-          <span class="px-2 py-0.5 rounded-md bg-secondary/10 text-secondary border border-secondary/20 text-[11px]">Obsidian</span>
-          <span class="px-2 py-0.5 rounded-md bg-accent/10 text-accent border border-accent/20 text-[11px]">TailwindCSS</span>
-          <span class="px-2 py-0.5 rounded-md bg-base-content/10 text-base-content/80 border border-base-content/15 text-[11px]">AI & Codex</span>
+        <div class="pl-3 sm:pl-4 flex flex-wrap gap-1.5 sm:gap-2 pt-0.5">
+          <span class="px-2 py-0.5 rounded-md bg-primary/10 text-primary border border-primary/20 text-[10px] sm:text-[11px]">Astro 4</span>
+          <span class="px-2 py-0.5 rounded-md bg-secondary/10 text-secondary border border-secondary/20 text-[10px] sm:text-[11px]">Obsidian</span>
+          <span class="px-2 py-0.5 rounded-md bg-accent/10 text-accent border border-accent/20 text-[10px] sm:text-[11px]">TailwindCSS</span>
+          <span class="px-2 py-0.5 rounded-md bg-base-content/10 text-base-content/80 border border-base-content/15 text-[10px] sm:text-[11px]">AI & Codex</span>
         </div>
       </div>
     </div>
 
-    <div class="mt-6 flex flex-wrap gap-3">
+    <div class="mt-4 sm:mt-6 flex flex-wrap gap-2.5 sm:gap-3">
       {isLocalizedLinkAvailable(home.connectLabel) && isLocalizedLinkAvailable(home.connectUrl) && (
-        <a class="btn btn-primary shadow-sm hover:shadow" href={getLocalized(home.connectUrl)} target="_blank">
+        <a class="btn btn-primary btn-sm sm:btn-md shadow-sm hover:shadow" href={getLocalized(home.connectUrl)} target="_blank">
           <LocalizedText value={home.connectLabel} />
         </a>
       )}
       {isLocalizedLinkAvailable(home.templateLabel) && isLocalizedLinkAvailable(home.templateUrl) && (
-        <a href={getLocalized(home.templateUrl)} target="_blank" class="btn btn-outline">
+        <a href={getLocalized(home.templateUrl)} target="_blank" class="btn btn-outline btn-sm sm:btn-md">
           <LocalizedText value={home.templateLabel} />
         </a>
       )}
@@ -94,11 +94,11 @@ const lastPosts = posts.slice(0, 4);
   </div>
 
   {isLocalizedTextAvailable(home.projectsHeading) && (
-    <div class="mt-10 mb-4">
-      <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-base-content flex items-center gap-2">
-        <span class="text-primary font-mono text-xl">&lt;</span>
+    <div class="mt-8 sm:mt-10 mb-3 sm:mb-4">
+      <h2 class="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-base-content flex items-center gap-2">
+        <span class="text-primary font-mono text-lg sm:text-xl">&lt;</span>
         <LocalizedText value={home.projectsHeading} />
-        <span class="text-primary font-mono text-xl">/&gt;</span>
+        <span class="text-primary font-mono text-lg sm:text-xl">/&gt;</span>
       </h2>
     </div>
   )}
@@ -117,10 +117,10 @@ const lastPosts = posts.slice(0, 4);
   </div>
 
   <!-- Latest Blog Posts -->
-  <div class="mt-12 mb-4 flex items-center justify-between border-b border-base-content/10 pb-3">
+  <div class="mt-10 sm:mt-12 mb-3 sm:mb-4 flex items-center justify-between border-b border-base-content/10 pb-2.5 sm:pb-3">
     <div class="flex items-center gap-2">
-      <span class="w-1.5 h-5 rounded-full bg-primary"></span>
-      <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-base-content">
+      <span class="w-1.5 h-4 sm:h-5 rounded-full bg-primary"></span>
+      <h2 class="text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-base-content">
         <LocalizedText value={home.blogHeading} />
       </h2>
     </div>

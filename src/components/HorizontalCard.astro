@@ -11,7 +11,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
 ---
 
 <div
-  class="group relative rounded-2xl border border-base-content/10 bg-base-100/60 backdrop-blur-md hover:bg-base-100 hover:border-primary/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden my-3 p-4 sm:p-5"
+  class="group relative rounded-xl sm:rounded-2xl border border-base-content/10 bg-base-100/60 backdrop-blur-md hover:bg-base-100 hover:border-primary/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 sm:hover:-translate-y-1 overflow-hidden my-2.5 sm:my-3 p-3.5 sm:p-5"
 >
   <a href={url} target={target} class="absolute inset-0 z-0" aria-label={displayTitle}>
     <span class="sr-only">{displayTitle}</span>
@@ -20,10 +20,10 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
   <!-- Subtle card ambient hover glow -->
   <div class="absolute -right-20 -top-20 w-40 h-40 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/15 transition-all duration-500 pointer-events-none"></div>
 
-  <div class="flex flex-col md:flex-row gap-5 items-start md:items-center relative pointer-events-none z-10">
+  <div class="flex flex-col md:flex-row gap-3.5 sm:gap-5 items-start md:items-center relative pointer-events-none z-10">
     {
       displayImage && (
-        <div class="relative shrink-0 w-full md:w-52 h-44 md:h-32 rounded-xl overflow-hidden bg-base-200 border border-base-content/5">
+        <div class="relative shrink-0 w-full md:w-52 h-36 sm:h-44 md:h-32 rounded-lg sm:rounded-xl overflow-hidden bg-base-200 border border-base-content/5">
           <Image
             src={displayImage}
             width={750}
@@ -36,27 +36,27 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
       )
     }
     <div class="grow w-full">
-      <div class="flex items-center flex-wrap gap-2">
-        <h2 class="text-lg sm:text-xl font-bold tracking-tight text-base-content group-hover:text-primary transition-colors">
+      <div class="flex items-center flex-wrap gap-1.5 sm:gap-2">
+        <h2 class="text-base sm:text-lg md:text-xl font-bold tracking-tight text-base-content group-hover:text-primary transition-colors leading-snug">
           <LocalizedText value={title as LocalizedValue} />
         </h2>
         {displayBadge && (
-          <span class="badge badge-secondary badge-sm font-medium font-mono text-[11px]">
+          <span class="badge badge-secondary badge-sm font-medium font-mono text-[10px] sm:text-[11px] px-1.5 py-0.5">
             <LocalizedText value={badge as LocalizedValue} />
           </span>
         )}
       </div>
 
-      <p class="py-2 text-sm text-base-content/70 line-clamp-2 leading-relaxed font-normal">
+      <p class="py-1.5 sm:py-2 text-xs sm:text-sm text-base-content/70 line-clamp-2 leading-relaxed font-normal">
         <LocalizedText value={desc as LocalizedValue} />
       </p>
 
       {tags && tags.length > 0 && (
-        <div class="flex flex-wrap gap-1.5 mt-2 pointer-events-auto relative z-10">
+        <div class="flex flex-wrap gap-1 sm:gap-1.5 mt-1 sm:mt-2 pointer-events-auto relative z-10">
           {tags.map((tag: string) => (
             <a
               href={`${tag_url}/${tag}`}
-              class="badge badge-sm badge-ghost border border-base-content/15 font-mono text-[11px] text-base-content/75 hover:border-primary hover:bg-primary/10 hover:text-primary transition-all duration-200 no-underline"
+              class="badge badge-sm badge-ghost border border-base-content/15 font-mono text-[10px] sm:text-[11px] text-base-content/75 hover:border-primary hover:bg-primary/10 hover:text-primary transition-all duration-200 no-underline px-2 py-0.5"
             >
               #{tag}
             </a>
