@@ -51,6 +51,14 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
+function getOptionalArrayKeys(path: string): string[] {
+  const prefix = `${path}.`;
+  return [...OPTIONAL_CONTENT_ARRAY_PATHS]
+    .filter((optionalPath) => optionalPath.startsWith(prefix))
+    .map((optionalPath) => optionalPath.slice(prefix.length))
+    .filter((key) => !key.includes("."));
+}
+
 export function mergeLocalized(zh: unknown, en: unknown, path: string): unknown {
   const isOptionalContentArray = OPTIONAL_CONTENT_ARRAY_PATHS.has(path);
 
@@ -77,7 +85,7 @@ export function mergeLocalized(zh: unknown, en: unknown, path: string): unknown 
     if (!isRecord(zh) || !isRecord(en)) {
       throw new Error(`Localized settings shape mismatch at ${path}`);
     }
-    const keys = new Set([...Object.keys(zh), ...Object.keys(en)]);
+    const keys = new Set([...Object.keys(zh), ...Object.keys(en), ...getOptionalArrayKeys(path)]);
     return Object.fromEntries(
       [...keys].map((key) => [key, mergeLocalized(zh[key], en[key], `${path}.${key}`)])
     );

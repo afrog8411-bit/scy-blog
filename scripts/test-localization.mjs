@@ -13,6 +13,20 @@ assert.equal(isLocalizedTextAvailable({ zh: "你好", en: "" }), true);
 
 assert.deepEqual(mergeLocalized(undefined, [{ title: "demo" }], "projects.items"), []);
 assert.deepEqual(mergeLocalized([], ["demo"], "cv.skills"), []);
+assert.deepEqual(
+  mergeLocalized(
+    { title: "简历" },
+    { title: "Resume" },
+    "cv"
+  ),
+  {
+    title: { zh: "简历", en: "Resume" },
+    education: [],
+    experience: [],
+    certifications: [],
+    skills: [],
+  }
+);
 assert.throws(
   () => mergeLocalized(["中文"], ["English", "Extra"], "home.items"),
   /Localized settings length mismatch/

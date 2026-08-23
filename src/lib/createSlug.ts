@@ -2,18 +2,22 @@
 
 import { GENERATE_SLUG_FROM_TITLE } from '../config'
 
+function slugify(value: string) {
+  return value
+    // remove leading & trailing whitespace
+    .trim()
+    // output lowercase
+    .toLowerCase()
+    // replace spaces
+    .replace(/\s+/g, '-')
+    // keep letters and numbers from every language
+    .replace(/[^\p{L}\p{N}_-]/gu, '')
+    // remove leading & trailing separators
+    .replace(/^-+|-+$/g, '')
+}
+
 export default function (title: string, staticSlug: string) {
-  return (
-    !GENERATE_SLUG_FROM_TITLE ? staticSlug : title
-      // remove leading & trailing whitespace
-      .trim()
-      // output lowercase
-      .toLowerCase()
-      // replace spaces
-      .replace(/\s+/g, '-')
-      // remove special characters
-      .replace(/[^\w-]/g, '')
-      // remove leading & trailing separtors
-      .replace(/^-+|-+$/g, '')
-  )
+  if (!GENERATE_SLUG_FROM_TITLE) return staticSlug
+
+  return slugify(title) || slugify(staticSlug)
 }
