@@ -23,3 +23,6 @@ pnpm-debug.log*
 
 # Local Git worktrees
 .worktrees/
+
+# Superpowers brainstorming cache
+.superpowers/

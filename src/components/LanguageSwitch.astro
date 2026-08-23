@@ -1,9 +1,48 @@
-<div class="fixed right-4 top-4 z-50 rounded-full bg-base-100/90 px-2 py-1 text-sm shadow backdrop-blur">
-  <button type="button" data-language-choice="zh" aria-pressed="true" class="px-2 py-1">中</button>
-  <span aria-hidden="true" class="opacity-50">/</span>
-  <button type="button" data-language-choice="en" aria-pressed="false" class="px-2 py-1">EN</button>
+<div class="fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-base-content/10 bg-base-100/80 px-2 py-1 text-xs shadow-sm backdrop-blur-md transition-colors hover:border-base-content/20">
+  <div class="flex items-center">
+    <button
+      type="button"
+      data-language-choice="zh"
+      aria-pressed="true"
+      class="rounded-full px-2 py-1 font-medium transition-colors hover:text-primary data-[active=true]:font-bold data-[active=true]:text-primary"
+    >
+      中
+    </button>
+    <span aria-hidden="true" class="opacity-30">/</span>
+    <button
+      type="button"
+      data-language-choice="en"
+      aria-pressed="false"
+      class="rounded-full px-2 py-1 font-medium transition-colors hover:text-primary data-[active=true]:font-bold data-[active=true]:text-primary"
+    >
+      EN
+    </button>
+  </div>
+  <div class="h-3 w-[1px] bg-base-content/20 mx-0.5" aria-hidden="true"></div>
+  <button
+    type="button"
+    data-theme-toggle
+    class="flex h-7 w-7 items-center justify-center rounded-full text-base-content/80 transition-colors hover:bg-base-200 hover:text-base-content focus:outline-none"
+    aria-label="Toggle theme"
+  >
+    <svg class="sun-icon hidden h-3.5 w-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="moon-icon h-3.5 w-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
 </div>
 
 <script>
   import "../scripts/language";
+  import "../scripts/theme";
 </script>

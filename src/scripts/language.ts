@@ -39,7 +39,10 @@ export function applyLocale(locale: Locale): void {
   document.querySelectorAll<HTMLButtonElement>("[data-language-choice]").forEach((button) => {
     const active = button.dataset.languageChoice === locale;
     button.setAttribute("aria-pressed", String(active));
+    button.dataset.active = String(active);
     button.classList.toggle("font-bold", active);
+    button.classList.toggle("opacity-100", active);
+    button.classList.toggle("opacity-50", !active);
   });
 }
 

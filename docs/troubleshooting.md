@@ -28,3 +28,12 @@
 - 适用范围：通过 Pages CMS 编辑 `src/data/site-settings.json` 时暂时没有项目、服务、简历或社交链接的情况。
 - 未解决边界：要显示双语项目、服务或简历条目，需要在中文和英文设置中分别填写对应条目；两边数量不一致时不会显示该列表。
 - 验证证据：当前设置缺少部分中文条目和 `shared.social`，`pnpm run validate:site` 与 `pnpm run build` 均已通过。
+
+## 本地开发报 `No loader is configured for ".node" files: ... sharp-win32-x64.node`
+
+- 症状：`pnpm run dev` 启动并访问页面时，esbuild 报错提示无法加载 `.node` 原生二进制文件。
+- 根因：Vite 的依赖预构建（`optimizeDeps`）尝试将原生 Node C++ 模块 `sharp` 作为前端依赖打包，但 esbuild 不支持打包 `.node` 二进制文件。
+- 已验证解法：在 `astro.config.mjs` 中的 `vite` 配置中添加 `optimizeDeps.exclude: ['sharp']` 以及 `ssr.external: ['sharp']`。
+- 适用范围：所有在 Astro 服务端/API 端点（如头像生成 `avatar.jpg.ts`）中直接使用 `sharp` 的本地开发环境。
+- 验证证据：配置后 `pnpm run dev` 正常启动，`/` 与 `/avatar.jpg` 请求均正常返回 200。
+

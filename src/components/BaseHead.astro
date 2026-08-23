@@ -48,7 +48,13 @@ const localizedDescription = toLocalized(description);
       document.documentElement.dataset.language = 'en';
       document.documentElement.lang = 'en';
     }
+    const storedTheme = window.localStorage.getItem('site-theme');
+    if (storedTheme) {
+      document.documentElement.setAttribute('data-theme', storedTheme);
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
   } catch {
-    // The default Chinese document remains usable when storage is unavailable.
+    // The default document remains usable when storage is unavailable.
   }
 </script>

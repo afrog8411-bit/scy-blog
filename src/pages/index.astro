@@ -14,23 +14,29 @@ const lastPosts = posts.slice(0, 3);
 ---
 
 <BaseLayout sideBarActiveItemID="home">
-  <div class="pb-12 mt-5">
+  <div class="pb-10 mt-2">
     {isLocalizedTextAvailable(home.greeting) && (
-      <div class="text-xl py-1"><LocalizedText value={home.greeting} /></div>
+      <div class="text-lg py-1 text-base-content/70"><LocalizedText value={home.greeting} /></div>
     )}
-    <div class="text-5xl font-bold"><LocalizedText value={home.name} /></div>
-    <div class="text-3xl py-3 font-bold"><LocalizedText value={home.headline} /></div>
+    <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-base-content">
+      <LocalizedText value={home.name} />
+    </h1>
+    <div class="text-2xl sm:text-3xl py-3 font-bold text-base-content/90 tracking-tight">
+      <LocalizedText value={home.headline} />
+    </div>
     {isLocalizedTextAvailable(home.intro) && (
-      <div class="py-2">
-        <text class="text-lg"><LocalizedText value={home.intro} /></text>
+      <div class="py-2 text-base sm:text-lg text-base-content/70 leading-relaxed max-w-2xl">
+        <LocalizedText value={home.intro} />
       </div>
     )}
-    <div class="mt-8">
+    <div class="mt-6 flex flex-wrap gap-3">
       {isLocalizedLinkAvailable(home.connectLabel) && isLocalizedLinkAvailable(home.connectUrl) && (
-        <a class="btn" href={getLocalized(home.connectUrl)} target="_blank"><LocalizedText value={home.connectLabel} /></a>
+        <a class="btn btn-primary shadow-sm hover:shadow" href={getLocalized(home.connectUrl)} target="_blank">
+          <LocalizedText value={home.connectLabel} />
+        </a>
       )}
       {isLocalizedLinkAvailable(home.templateLabel) && isLocalizedLinkAvailable(home.templateUrl) && (
-        <a href={getLocalized(home.templateUrl)} target="_blank" class="btn btn-outline ml-5">
+        <a href={getLocalized(home.templateUrl)} target="_blank" class="btn btn-outline">
           <LocalizedText value={home.templateLabel} />
         </a>
       )}
@@ -38,13 +44,15 @@ const lastPosts = posts.slice(0, 3);
   </div>
 
   {isLocalizedTextAvailable(home.projectsHeading) && (
-    <div>
-      <div class="text-3xl w-full font-bold mb-2"><LocalizedText value={home.projectsHeading} /></div>
+    <div class="mt-8 mb-4">
+      <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-base-content">
+        <LocalizedText value={home.projectsHeading} />
+      </h2>
     </div>
   )}
 
-  {projects.items.slice(0, 3).map((project, index) => (
-    <>
+  <div class="space-y-3">
+    {projects.items.slice(0, 3).map((project) => (
       <HorizontalCard
         title={project.title}
         img={getLocalized(project.image)}
@@ -53,17 +61,25 @@ const lastPosts = posts.slice(0, 3);
         target="_self"
         badge={project.badge}
       />
-      {index < 2 && <div class="divider my-0" />}
-    </>
-  ))}
-
-  <div>
-    <div class="text-3xl w-full font-bold mb-5 mt-10"><LocalizedText value={home.blogHeading} /></div>
+    ))}
   </div>
 
-  {
-    lastPosts.map((post) => (
-      <>
+  <div class="mt-10 mb-4 flex items-center justify-between">
+    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-base-content">
+      <LocalizedText value={home.blogHeading} />
+    </h2>
+    <a
+      href="/blog"
+      class="text-sm font-medium text-base-content/60 hover:text-primary transition-colors inline-flex items-center gap-1"
+    >
+      <span data-localized data-localized-zh="查看全部" data-localized-en="View all">查看全部</span>
+      <span>&rarr;</span>
+    </a>
+  </div>
+
+  <div class="space-y-3">
+    {
+      lastPosts.map((post) => (
         <HorizontalCard
           title={post.data.title}
           img={post.data.heroImage}
@@ -71,9 +87,9 @@ const lastPosts = posts.slice(0, 3);
           url={"/blog/" + createSlug(post.data.title, post.slug)}
           target="_self"
           badge={post.data.badge}
+          tags={post.data.tags}
         />
-        <div class="divider my-0" />
-      </>
-    ))
-  }
+      ))
+    }
+  </div>
 </BaseLayout>
