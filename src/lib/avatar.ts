@@ -1,5 +1,19 @@
+import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
+
+function assertPathInsidePublic(publicRoot: string, sourcePath: string): void {
+  const relativePath = path.relative(publicRoot, sourcePath);
+
+  if (
+    relativePath === "" ||
+    relativePath === ".." ||
+    relativePath.startsWith(`..${path.sep}`) ||
+    path.isAbsolute(relativePath)
+  ) {
+    throw new Error("profile image path must stay inside public");
+  }
+}
 
 export function resolvePublicImagePath(
   profileImage: string,
@@ -11,18 +25,13 @@ export function resolvePublicImagePath(
 
   const publicRoot = path.resolve(projectRoot, "public");
   const sourcePath = path.resolve(publicRoot, profileImage.slice(1));
-  const relativePath = path.relative(publicRoot, sourcePath);
+  assertPathInsidePublic(publicRoot, sourcePath);
 
-  if (
-    relativePath === "" ||
-    relativePath === ".." ||
-    relativePath.startsWith(`..${path.sep}`) ||
-    path.isAbsolute(relativePath)
-  ) {
-    throw new Error("profile image path must stay inside public");
-  }
+  const realPublicRoot = fs.realpathSync(publicRoot);
+  const realSourcePath = fs.realpathSync(sourcePath);
+  assertPathInsidePublic(realPublicRoot, realSourcePath);
 
-  return sourcePath;
+  return realSourcePath;
 }
 
 export async function createAvatarJpeg(
