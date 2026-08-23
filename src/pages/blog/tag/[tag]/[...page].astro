@@ -3,6 +3,8 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import HorizontalCard from "@components/HorizontalCard.astro";
 import { getCollection } from "astro:content";
 import createSlug from "../../../../lib/createSlug";
+import LocalizedText from "../../../../components/LocalizedText.astro";
+import { localizeSection } from "../../../../lib/siteSettings";
 
 export async function getStaticPaths({ paginate }) {
   const all_posts = await getCollection("blog");
@@ -23,17 +25,20 @@ export async function getStaticPaths({ paginate }) {
 
 const { page } = Astro.props;
 const params = Astro.params;
+const blog = localizeSection("blog");
+const common = localizeSection("common");
+const tagTitle = { zh: `${blog.title.zh} - ${params.tag}`, en: `${blog.title.en} - ${params.tag}` };
 ---
 
-<BaseLayout title={"Blog - " + params.tag} sideBarActiveItemID="blog">
+<BaseLayout title={tagTitle} sideBarActiveItemID="blog">
   <div class="mb-5">
-    <div class="text-3xl w-full font-bold">Blog - {params.tag}</div>
+    <div class="text-3xl w-full font-bold"><LocalizedText value={blog.title} /> - {params.tag}</div>
   </div>
   {
     page.data.length === 0 ? (
       <div class="bg-base-200 border-l-4 border-secondary w-full p-4 min-w-full">
-        <p class="font-bold">Sorry!</p>
-        <p>There are no blog posts to show at the moment. Check back later!</p>
+        <p class="font-bold"><LocalizedText value={common.noPostsTitle} /></p>
+        <p><LocalizedText value={common.noPostsMessage} /></p>
       </div>
     ) : (
       <ul>
@@ -69,7 +74,7 @@ const params = Astro.params;
           >
             <path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
           </svg>{" "}
-          Recent posts
+          <LocalizedText value={common.recentPosts} />
         </a>
       ) : (
         <div />
@@ -78,7 +83,7 @@ const params = Astro.params;
     {
       page.url.next ? (
         <a href={page.url.next} class="btn btn-ghost my-10 mx-5">
-          Older Posts{" "}
+          <LocalizedText value={common.olderPosts} />{" "}
           <svg
             class="h-6 w-6 fill-current md:h-8 md:w-8"
             xmlns="http://www.w3.org/2000/svg"

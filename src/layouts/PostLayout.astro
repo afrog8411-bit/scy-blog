@@ -3,10 +3,13 @@ import { type BlogSchema } from "../content/config";
 import BaseLayout from "./BaseLayout.astro";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
+import LocalizedText from "../components/LocalizedText.astro";
+import { localizeSection } from "../lib/siteSettings";
 
 export interface Props extends BlogSchema {}
 
 const { title, description, pubDate, updatedDate, heroImage, badge, tags = [] } = Astro.props;
+const common = localizeSection("common");
 dayjs.extend(localizedFormat);
 const displayDate = dayjs(pubDate).format("ll")
 import { Image } from "astro:assets";
@@ -32,7 +35,7 @@ import { Image } from "astro:assets";
         updatedDate && (
           <div>
             {" "}
-            Last updated on <time>{updatedDate}</time>{" "}
+            <LocalizedText value={common.lastUpdated} /> <time>{updatedDate}</time>{" "}
           </div>
         )
       }

@@ -3,6 +3,8 @@ import { type StoreSchema } from "../content/config";
 import BaseLayout from "./BaseLayout.astro";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
+import LocalizedText from "../components/LocalizedText.astro";
+import { localizeSection } from "../lib/siteSettings";
 
 export interface Props extends StoreSchema {}
 
@@ -18,6 +20,7 @@ const {
   custom_link,
   custom_link_label,
 } = Astro.props;
+const common = localizeSection("common");
 
 dayjs.extend(localizedFormat);
 const displayDate = dayjs(updatedDate).format("ll");
@@ -50,7 +53,7 @@ import { Image } from "astro:assets";
                 </a>
               )
             }
-            <a class="btn btn-primary grow md:grow-0 ml-4" href={checkoutUrl} target="_blank">Buy Now</a>
+            <a class="btn btn-primary grow md:grow-0 ml-4" href={checkoutUrl} target="_blank"><LocalizedText value={common.buyNow} /></a>
           </div>
         </div>
       </div>

@@ -1,7 +1,9 @@
+import { SITE_SETTINGS } from './lib/siteSettings';
+
 // Place any global data in this file.
 // You can import this data from anywhere in your site by using the `import` keyword.
 
-export const SITE_TITLE = 'Astrofy | Personal Portfolio Website Template';
-export const SITE_DESCRIPTION = 'Astrofy is a free and open-source template for your Personal Portfolio Website built with Astro and TailwindCSS. Create in minutes a website with Blog, CV, Project Section, Store and RSS Feed.';
+export const SITE_TITLE = SITE_SETTINGS.zh.siteTitle;
+export const SITE_DESCRIPTION = SITE_SETTINGS.zh.siteDescription;
 export const GENERATE_SLUG_FROM_TITLE = true
 export const TRANSITION_API = true
