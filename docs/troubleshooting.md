@@ -7,9 +7,18 @@
 - 已验证解法：使用 `pnpm add astro@4.11.0 --save-exact` 更新 `package.json` 和 `pnpm-lock.yaml`，随后运行 `pnpm install --frozen-lockfile` 和 `pnpm run build`。
 - 适用范围：当前 Astro 4.x 模板的同类导出缺失错误。
 - 未解决边界：不要直接安装 `astro@latest`；新主版本需要另行检查旧模板和 `@astrojs` 依赖兼容性。
-- 验证证据：当前项目 Astro 版本为 4.11.0，静态构建已成功生成 16 个页面。
+- 验证证据：当前项目 Astro 版本为 4.11.0，静态构建已成功生成 11 个页面。
 
 构建日志中关于 Wrangler 的提示不是这个错误的根因；排查时优先查看最早出现的 `✘ [ERROR]`。
+
+## Astro 构建成功但 Workers 部署失败
+
+- 症状：`pnpm run build` 成功，但 `npx wrangler deploy` 进入自动配置或依赖安装，并因 `ERR_PNPM_IGNORED_BUILDS` 等错误停止。
+- 根因：Cloudflare 项目使用 Workers Builds，但仓库没有明确的 Wrangler 静态资源配置，部署阶段无法确定 `dist` 是要发布的资产目录。
+- 已验证解法：在仓库根目录保留 `wrangler.jsonc`，将 `assets.directory` 指向 `./dist`，并保持 Astro 默认静态输出；本地用 `pnpm dlx wrangler@4.125.0 deploy --dry-run` 验证后再推送。
+- 适用范围：当前项目的预渲染 Astro 网站与 Cloudflare Workers Builds。
+- 未解决边界：这套配置不提供 SSR Worker；需要服务端渲染时必须另行设计 Astro adapter 和 Worker 入口。
+- 验证证据：Workers Builds 已成功执行 `pnpm run build` 和 `npx wrangler deploy`，并发布 `dist` 静态文件。
 
 ## Pages CMS 保存后设置字段缺失
 

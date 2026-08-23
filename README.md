@@ -28,6 +28,8 @@ The interface defaults to Chinese and the language switch is in the upper-right 
 
 Blog posts and store items remain single-language Markdown content: write each entry in the language you want to publish, without creating duplicate language versions. For the visual editing workflow through Pages CMS, see [`docs/pages-cms.md`](docs/pages-cms.md).
 
+The profile image is managed in Pages CMS under `Website settings` → `Site settings` → `Shared settings` → `Profile image`. After deployment, the site publishes the current image at the stable URL `https://scy.cool/avatar.jpg`.
+
 ## Tech Stack
 
 - [Astro](https://astro.build)
@@ -99,7 +101,7 @@ The `BaseHead`, `Footer`, `Header`, and `SideBar` components are already include
 
 ##### SideBar
 
-In the Sidebar you can change your profilePicture, links to all your website pages, and your social icons.
+For visual content changes, manage the profile image and social links through Pages CMS. The sidebar uses the stable generated avatar URL `/avatar.jpg`; page navigation and social icons remain in the sidebar components.
 
 You can change your avatar shape using [mask classes](https://daisyui.com/components/mask/).
 

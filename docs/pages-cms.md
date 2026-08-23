@@ -19,6 +19,8 @@ Pages CMS 是这个网站的可视化内容编辑入口。它修改仓库里的�
 
 网站第一次打开默认显示中文。访客可以点击右上角的 `中 / EN` 切换界面语言。这个切换不会改变博客文章的语言。
 
+头像从 `Profile image` 上传或选择即可。每次构建会自动生成固定地址 `https://scy.cool/avatar.jpg`，不需要手动复制 `public/uploads` 下带哈希的文件名；头像源图可以是 JPG、PNG 或 WebP，网站会统一输出 JPEG。
+
 ## 编辑博客
 
 进入 `Content` → `Blog posts`，新建或打开一篇文章。
