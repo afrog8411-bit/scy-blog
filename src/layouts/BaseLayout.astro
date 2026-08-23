@@ -3,14 +3,26 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import SideBar from "../components/SideBar.astro";
+import LanguageSwitch from "../components/LanguageSwitch.astro";
 import { ViewTransitions } from "astro:transitions";
 
-import { SITE_TITLE, SITE_DESCRIPTION, TRANSITION_API } from "../config";
+import { SITE_SETTINGS } from "../lib/siteSettings";
+import { TRANSITION_API } from "../config";
+import type { LocalizedValue } from "../lib/localization";
+
+interface Props {
+  image?: string;
+  title?: LocalizedValue;
+  description?: LocalizedValue;
+  includeSidebar?: boolean;
+  sideBarActiveItemID?: string;
+  ogType?: string;
+}
 
 const {
   image,
-  title = SITE_TITLE,
-  description = SITE_DESCRIPTION,
+  title = { zh: SITE_SETTINGS.zh.siteTitle, en: SITE_SETTINGS.en.siteTitle },
+  description = { zh: SITE_SETTINGS.zh.siteDescription, en: SITE_SETTINGS.en.siteDescription },
   includeSidebar = true,
   sideBarActiveItemID,
   ogType,
@@ -18,16 +30,17 @@ const {
 ---
 
 <!doctype html>
-<html lang="en" data-theme="lofi">
+<html lang="zh-CN" data-language="zh" data-theme="lofi">
   <head>
-    <BaseHead title={title} description={description} image={image} , ogType={ogType} />
+    <BaseHead title={title} description={description} image={image} ogType={ogType} />
     {TRANSITION_API && <ViewTransitions />}
   </head>
   <body>
+    <LanguageSwitch />
     <div class="bg-base-100 drawer lg:drawer-open">
       <input id="my-drawer" type="checkbox" class="drawer-toggle" />
       <div class="drawer-content bg-base-100">
-        <Header title={SITE_TITLE} />
+        <Header title={SITE_SETTINGS.shared.brand} />
         <div class="md:flex md:justify-center">
           <main class="p-6 pt-10 lg:max-w-[900px] max-w-[100vw]">
             <slot />

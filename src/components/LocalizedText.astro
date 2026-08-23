@@ -1,0 +1,13 @@
+---
+import { toLocalized, type LocalizedValue } from "../lib/localization";
+
+interface Props {
+  value: LocalizedValue;
+  class?: string;
+}
+
+const { value, class: className } = Astro.props;
+const text = toLocalized(value);
+---
+
+<span class={className} data-localized data-localized-zh={text.zh} data-localized-en={text.en}>{text.zh}</span>

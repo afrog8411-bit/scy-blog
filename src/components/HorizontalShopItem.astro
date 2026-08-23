@@ -13,33 +13,38 @@ const {
   custom_link_label = "",
 } = Astro.props;
 import { Image } from "astro:assets";
+import LocalizedText from "./LocalizedText.astro";
+import { getLocalized, type LocalizedValue } from "../lib/localization";
+const displayTitle = getLocalized(title as LocalizedValue);
+const displayImage = img ? getLocalized(img as LocalizedValue) : undefined;
+const displayBadge = badge ? getLocalized(badge as LocalizedValue) : "";
 ---
 
 <div class="rounded-lg bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%]">
   <a href={url}>
     <div class="hero-content flex-col md:flex-row">
       {
-        img && (
+        displayImage && (
           <Image
             width={750}
             height={422}
             format="webp"
-            src={img}
-            alt={title}
+            src={displayImage}
+            alt={displayTitle}
             class="max-w-full md:max-w-[13rem] rounded-lg"
           />
         )
       }
       <div class="grow w-full p-5 md:p-0">
         <h1 class="text-xl font-bold">
-          {title}
-          {badge && <div class="badge badge-secondary mx-2">{badge}</div>}
+          <LocalizedText value={title as LocalizedValue} />
+          {displayBadge && <div class="badge badge-secondary mx-2"><LocalizedText value={badge as LocalizedValue} /></div>}
         </h1>
         <div>
           <span class="text-xl mr-1"> {pricing}</span>
           <span class="text-md opacity-50 line-through">{oldPricing}</span>
         </div>
-        <p class="py-1 text-1xl">{desc}</p>
+        <p class="py-1 text-1xl"><LocalizedText value={desc as LocalizedValue} /></p>
       </div>
     </div>
   </a>

@@ -2,15 +2,18 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
+import { toLocalized, type LocalizedValue } from '../lib/localization';
 
 export interface Props {
-	title: string;
-	description: string;
+	title: LocalizedValue;
+	description: LocalizedValue;
 	image?: string;
 	ogType?: string;
 }
 
 const { title, description, image = '/social_img.webp', ogType = 'website' } = Astro.props;
+const localizedTitle = toLocalized(title);
+const localizedDescription = toLocalized(description);
 ---
 
 <!-- Global Metadata -->
@@ -20,20 +23,32 @@ const { title, description, image = '/social_img.webp', ogType = 'website' } = A
 <meta name="generator" content={Astro.generator} />
 
 <!-- Primary Meta Tags -->
-<title>{title}</title>
-<meta name="title" content={title} />
-<meta name="description" content={description} />
+<title data-localized data-localized-zh={localizedTitle.zh} data-localized-en={localizedTitle.en}>{localizedTitle.zh}</title>
+<meta name="title" data-localized-meta data-localized-zh={localizedTitle.zh} data-localized-en={localizedTitle.en} content={localizedTitle.zh} />
+<meta name="description" data-localized-meta data-localized-zh={localizedDescription.zh} data-localized-en={localizedDescription.en} content={localizedDescription.zh} />
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={ogType} />
 <meta property="og:url" content={Astro.url} />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
+<meta property="og:title" data-localized-meta data-localized-zh={localizedTitle.zh} data-localized-en={localizedTitle.en} content={localizedTitle.zh} />
+<meta property="og:description" data-localized-meta data-localized-zh={localizedDescription.zh} data-localized-en={localizedDescription.en} content={localizedDescription.zh} />
 <meta property="og:image" content={new URL(image, Astro.url)} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
+<meta property="twitter:title" data-localized-meta data-localized-zh={localizedTitle.zh} data-localized-en={localizedTitle.en} content={localizedTitle.zh} />
+<meta property="twitter:description" data-localized-meta data-localized-zh={localizedDescription.zh} data-localized-en={localizedDescription.en} content={localizedDescription.zh} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+<script is:inline>
+  try {
+    const storedLocale = window.localStorage.getItem('site-language');
+    if (storedLocale === 'en') {
+      document.documentElement.dataset.language = 'en';
+      document.documentElement.lang = 'en';
+    }
+  } catch {
+    // The default Chinese document remains usable when storage is unavailable.
+  }
+</script>
