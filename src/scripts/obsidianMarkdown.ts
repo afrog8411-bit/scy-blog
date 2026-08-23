@@ -1,12 +1,16 @@
 /**
  * obsidianMarkdown.ts
- * Enhances standard Markdown/MDX content with Obsidian-compatible features:
- * 1. Obsidian Callouts (> [!NOTE], > [!TIP], > [!WARNING], > [!DANGER], etc.)
- * 2. Highlights (==text==)
- * 3. External link indicators (target="_blank" + ↗ icon)
- * 4. Image Lightbox with zoom and captions
- * 5. Code block headers (Mac dots, language badge, copy button)
- * 6. TOC active heading scroll tracking
+ * Comprehensive Obsidian Markdown enhancements for Astro blog:
+ * 1. Obsidian Callouts (> [!NOTE], > [!TIP], > [!WARNING], > [!DANGER], etc.) with nesting and fold states (+/-)
+ * 2. Obsidian Comments (%% text %%) - auto-stripped from rendered view
+ * 3. Obsidian Highlights (==text==)
+ * 4. Obsidian Inline Tags (#tag, #nested/tag) linking to tag archives
+ * 5. Obsidian Wikilinks ([[Note]] / [[Note|Alias]] / [[#Heading]]) and Embeds (![[image.png|300]])
+ * 6. Image Resizing & Alignment (alt="description|300", "alt|300x200", "alt|center")
+ * 7. Image Lightbox with zoom and captions
+ * 8. External link indicators (target="_blank" + ↗ icon)
+ * 9. Code block headers (Mac dots, language badge, copy button)
+ * 10. TOC active heading scroll tracking
  */
 
 interface CalloutConfig {
@@ -17,11 +21,30 @@ interface CalloutConfig {
 }
 
 const CALLOUT_TYPES: Record<string, CalloutConfig> = {
+  // Notes & Info
   note: {
     title: "Note",
     color: "#3b82f6",
     bgRgb: "59, 130, 246",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`,
+  },
+  abstract: {
+    title: "Abstract",
+    color: "#06b6d4",
+    bgRgb: "6, 182, 212",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="13" y2="17"></line></svg>`,
+  },
+  summary: {
+    title: "Summary",
+    color: "#06b6d4",
+    bgRgb: "6, 182, 212",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="13" y2="17"></line></svg>`,
+  },
+  tldr: {
+    title: "TL;DR",
+    color: "#06b6d4",
+    bgRgb: "6, 182, 212",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path><path d="M6 6h10"></path><path d="M6 10h10"></path></svg>`,
   },
   info: {
     title: "Info",
@@ -35,6 +58,8 @@ const CALLOUT_TYPES: Record<string, CalloutConfig> = {
     bgRgb: "2, 132, 199",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="m9 12 2 2 4-4"></path></svg>`,
   },
+
+  // Tips & Success
   tip: {
     title: "Tip",
     color: "#10b981",
@@ -71,6 +96,8 @@ const CALLOUT_TYPES: Record<string, CalloutConfig> = {
     bgRgb: "34, 197, 94",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`,
   },
+
+  // Questions & Help
   question: {
     title: "Question",
     color: "#a855f7",
@@ -89,6 +116,8 @@ const CALLOUT_TYPES: Record<string, CalloutConfig> = {
     bgRgb: "168, 85, 247",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>`,
   },
+
+  // Warnings & Caution
   warning: {
     title: "Warning",
     color: "#f59e0b",
@@ -107,6 +136,8 @@ const CALLOUT_TYPES: Record<string, CalloutConfig> = {
     bgRgb: "245, 158, 11",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>`,
   },
+
+  // Failures & Errors
   failure: {
     title: "Failure",
     color: "#ef4444",
@@ -143,6 +174,8 @@ const CALLOUT_TYPES: Record<string, CalloutConfig> = {
     bgRgb: "244, 63, 94",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="14" x="8" y="6" rx="4"></rect><path d="m19 7-3 2"></path><path d="m5 7 3 2"></path><path d="m19 19-3-2"></path><path d="m5 19 3-2"></path><path d="M20 13h-4"></path><path d="M4 13h4"></path><path d="m10 4 1 2"></path><path d="m14 4-1 2"></path></svg>`,
   },
+
+  // Examples & Quotes
   example: {
     title: "Example",
     color: "#06b6d4",
@@ -155,27 +188,37 @@ const CALLOUT_TYPES: Record<string, CalloutConfig> = {
     bgRgb: "100, 116, 139",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg>`,
   },
+  cite: {
+    title: "Cite",
+    color: "#64748b",
+    bgRgb: "100, 116, 139",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg>`,
+  },
 };
 
 /**
- * 1. Transform blockquotes into Obsidian Callouts
+ * 1. Transform blockquotes into Obsidian Callouts (Support Bottom-Up Nesting & +/- Folds)
  */
 export function initObsidianCallouts(): void {
-  const blockquotes = document.querySelectorAll<HTMLElement>("article .article-body blockquote");
+  // Bottom-up traversal to allow clean nested callout conversion
+  const blockquotes = Array.from(
+    document.querySelectorAll<HTMLElement>("article .article-body blockquote")
+  ).reverse();
 
   blockquotes.forEach((blockquote) => {
     if (blockquote.dataset.calloutTransformed === "true") return;
 
-    const firstP = blockquote.querySelector("p");
-    if (!firstP) return;
+    // Find the first paragraph or direct text inside blockquote
+    const firstP = blockquote.querySelector("p") || blockquote;
+    const text = firstP.textContent?.trim() || "";
 
-    const text = firstP.innerHTML.trim();
+    // Match [!type], [!type]+, [!type]-, [!type] Custom Title
     const calloutMatch = text.match(/^\[!([a-zA-Z_-]+)\]([+-]?)(.*)$/m);
 
     if (calloutMatch) {
       blockquote.dataset.calloutTransformed = "true";
       const rawType = calloutMatch[1].toLowerCase();
-      const collapseSign = calloutMatch[2]; // + or - or none
+      const collapseSign = calloutMatch[2]; // "+" = open, "-" = closed, "" = static div
       const customTitle = calloutMatch[3]?.trim();
 
       const config = CALLOUT_TYPES[rawType] || {
@@ -187,15 +230,17 @@ export function initObsidianCallouts(): void {
 
       const title = customTitle || config.title;
 
-      // Remove the [!TYPE] line from the first paragraph
-      const remainingHtml = firstP.innerHTML
-        .replace(/^\[!([a-zA-Z_-]+)\]([+-]?)(.*)(<br\s*\/?>|\n)?/im, "")
-        .trim();
+      // Clean the [!TYPE] marker from the first paragraph's HTML
+      if (firstP.innerHTML) {
+        const cleanedHtml = firstP.innerHTML
+          .replace(/^\[!([a-zA-Z_-]+)\]([+-]?)(.*)(<br\s*\/?>|\n)?/im, "")
+          .trim();
 
-      if (remainingHtml) {
-        firstP.innerHTML = remainingHtml;
-      } else {
-        firstP.remove();
+        if (cleanedHtml) {
+          firstP.innerHTML = cleanedHtml;
+        } else if (firstP !== blockquote) {
+          firstP.remove();
+        }
       }
 
       const isCollapsible = collapseSign === "+" || collapseSign === "-";
@@ -211,14 +256,14 @@ export function initObsidianCallouts(): void {
       }
 
       const titleEl = document.createElement(isCollapsible ? "summary" : "div");
-      titleEl.className = "callout-title cursor-pointer";
+      titleEl.className = `callout-title ${isCollapsible ? "cursor-pointer select-none" : ""}`;
       titleEl.innerHTML = `
         <span class="callout-icon">${config.icon}</span>
-        <span class="callout-title-text">${title}</span>
+        <span class="callout-title-text font-semibold">${title}</span>
         ${
           isCollapsible
             ? `<span class="callout-fold ml-auto text-xs opacity-60">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform details-arrow"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200 details-arrow"><polyline points="6 9 12 15 18 9"></polyline></svg>
                </span>`
             : ""
         }
@@ -226,6 +271,7 @@ export function initObsidianCallouts(): void {
 
       const contentEl = document.createElement("div");
       contentEl.className = "callout-content";
+
       while (blockquote.firstChild) {
         contentEl.appendChild(blockquote.firstChild);
       }
@@ -239,7 +285,40 @@ export function initObsidianCallouts(): void {
 }
 
 /**
- * 2. Transform Obsidian ==highlight== syntax
+ * 2. Strip Obsidian Comments (%% comment %%) from view
+ */
+export function initObsidianComments(): void {
+  const articleBody = document.querySelector<HTMLElement>("article .article-body");
+  if (!articleBody) return;
+
+  const walker = document.createTreeWalker(articleBody, NodeFilter.SHOW_TEXT);
+  const nodesToProcess: { node: Text; newText: string }[] = [];
+
+  let node = walker.nextNode() as Text | null;
+  while (node) {
+    if (
+      node.parentElement &&
+      !["PRE", "CODE", "SCRIPT", "STYLE"].includes(node.parentElement.tagName) &&
+      node.textContent &&
+      node.textContent.includes("%%")
+    ) {
+      const newText = node.textContent.replace(/%%[\s\S]*?%%/g, "");
+      nodesToProcess.push({ node, newText });
+    }
+    node = walker.nextNode() as Text | null;
+  }
+
+  nodesToProcess.forEach(({ node, newText }) => {
+    if (newText.trim() === "" && node.parentElement?.childNodes.length === 1) {
+      node.parentElement.remove();
+    } else {
+      node.textContent = newText;
+    }
+  });
+}
+
+/**
+ * 3. Transform Obsidian Highlights (==text==)
  */
 export function initObsidianHighlights(): void {
   const articleBody = document.querySelector<HTMLElement>("article .article-body");
@@ -252,7 +331,7 @@ export function initObsidianHighlights(): void {
   while (node) {
     if (
       node.parentElement &&
-      !["PRE", "CODE", "SCRIPT", "STYLE"].includes(node.parentElement.tagName) &&
+      !["PRE", "CODE", "SCRIPT", "STYLE", "MARK"].includes(node.parentElement.tagName) &&
       node.textContent &&
       /==([^=\n]+)==/.test(node.textContent)
     ) {
@@ -273,7 +352,180 @@ export function initObsidianHighlights(): void {
 }
 
 /**
- * 3. External Links (open in new tab + add ↗ icon)
+ * 4. Transform Obsidian Inline Tags (#tag, #tag/subtag)
+ */
+export function initObsidianInlineTags(): void {
+  const articleBody = document.querySelector<HTMLElement>("article .article-body");
+  if (!articleBody) return;
+
+  const walker = document.createTreeWalker(articleBody, NodeFilter.SHOW_TEXT);
+  const nodesToReplace: { node: Text; html: string }[] = [];
+
+  // Match #tag or #nested/tag preceded by start/whitespace and followed by whitespace/punctuation
+  const tagRegex = /(^|\s)#([\u4e00-\u9fa5a-zA-Z0-9_-]+(?:\/[\u4e00-\u9fa5a-zA-Z0-9_-]+)*)(?=\s|[.,;:!?，。！？、）]|$)/g;
+
+  let node = walker.nextNode() as Text | null;
+  while (node) {
+    const parentTag = node.parentElement?.tagName;
+    if (
+      node.parentElement &&
+      !["PRE", "CODE", "SCRIPT", "STYLE", "A", "H1", "H2", "H3", "H4", "H5", "H6"].includes(
+        parentTag || ""
+      ) &&
+      node.textContent &&
+      tagRegex.test(node.textContent)
+    ) {
+      // Reset regex index before replace
+      tagRegex.lastIndex = 0;
+      const html = node.textContent.replace(
+        tagRegex,
+        '$1<a href="/blog/tag/$2" class="obsidian-inline-tag">#$2</a>'
+      );
+      nodesToReplace.push({ node, html });
+    }
+    node = walker.nextNode() as Text | null;
+  }
+
+  nodesToReplace.forEach(({ node, html }) => {
+    const span = document.createElement("span");
+    span.innerHTML = html;
+    node.replaceWith(...Array.from(span.childNodes));
+  });
+}
+
+/**
+ * 5. Transform Obsidian Wikilinks ([[Note]] / [[Note|Alias]]) and Embeds (![[image.png|300]])
+ */
+export function initObsidianWikilinks(): void {
+  const articleBody = document.querySelector<HTMLElement>("article .article-body");
+  if (!articleBody) return;
+
+  const walker = document.createTreeWalker(articleBody, NodeFilter.SHOW_TEXT);
+  const nodesToReplace: { node: Text; html: string }[] = [];
+
+  // Regex for embeds: ![[filename|size]]
+  const embedRegex = /!\[\[([^|\]\n]+)(?:\|([^\]\n]+))?\]\]/g;
+  // Regex for wikilinks: [[target#heading|alias]]
+  const wikilinkRegex = /\[\[([^|\]\n#]+)?(?:#([^|\]\n]+))?(?:\|([^\]\n]+))?\]\]/g;
+
+  let node = walker.nextNode() as Text | null;
+  while (node) {
+    const parentTag = node.parentElement?.tagName;
+    if (
+      node.parentElement &&
+      !["PRE", "CODE", "SCRIPT", "STYLE", "A"].includes(parentTag || "") &&
+      node.textContent &&
+      (embedRegex.test(node.textContent) || wikilinkRegex.test(node.textContent))
+    ) {
+      embedRegex.lastIndex = 0;
+      wikilinkRegex.lastIndex = 0;
+
+      let html = node.textContent;
+
+      // Replace embeds: ![[image.png|300]]
+      html = html.replace(embedRegex, (_, file, size) => {
+        const filename = file.trim();
+        const src = filename.startsWith("/") ? filename : `/uploads/${filename}`;
+        const sizeAttr = size ? `data-size="${size.trim()}"` : "";
+        return `<img src="${src}" alt="${filename}" class="obsidian-embed-img rounded-xl shadow-md my-4" ${sizeAttr} />`;
+      });
+
+      // Replace wikilinks: [[Note|Alias]] or [[#Heading]]
+      html = html.replace(wikilinkRegex, (_, target, heading, alias) => {
+        const targetClean = target?.trim() || "";
+        const headingClean = heading?.trim() || "";
+        const displayText = alias?.trim() || targetClean || headingClean || "link";
+
+        let href = "";
+        if (targetClean && headingClean) {
+          href = `/blog/${encodeURIComponent(targetClean)}#${encodeURIComponent(headingClean)}`;
+        } else if (targetClean) {
+          href = `/blog/${encodeURIComponent(targetClean)}`;
+        } else if (headingClean) {
+          href = `#${encodeURIComponent(headingClean)}`;
+        }
+
+        return `<a href="${href}" class="obsidian-wikilink text-primary underline underline-offset-4 decoration-primary/40 hover:decoration-primary font-medium">${displayText}</a>`;
+      });
+
+      nodesToReplace.push({ node, html });
+    }
+    node = walker.nextNode() as Text | null;
+  }
+
+  nodesToReplace.forEach(({ node, html }) => {
+    const span = document.createElement("span");
+    span.innerHTML = html;
+    node.replaceWith(...Array.from(span.childNodes));
+  });
+}
+
+/**
+ * 6. Image Resizing & Alignment Support (alt="desc|300", "alt|300x200", "alt|center|300", etc.)
+ */
+export function initImageResizeAndAlignment(): void {
+  const images = document.querySelectorAll<HTMLImageElement>("article .article-body img");
+
+  images.forEach((img) => {
+    if (img.dataset.resizeProcessed === "true") return;
+    img.dataset.resizeProcessed = "true";
+
+    const alt = img.getAttribute("alt") || "";
+    const sizeData = img.dataset.size || "";
+    const rawMeta = sizeData || (alt.includes("|") ? alt.split("|").slice(1).join("|") : "");
+
+    if (rawMeta) {
+      const parts = rawMeta.toLowerCase().split("|").map((p) => p.trim());
+      let width = "";
+      let height = "";
+      let alignment = "";
+
+      for (const part of parts) {
+        if (part === "center" || part === "left" || part === "right") {
+          alignment = part;
+        } else if (/^\d+x\d+$/.test(part)) {
+          const [w, h] = part.split("x");
+          width = `${w}px`;
+          height = `${h}px`;
+        } else if (/^\d+$/.test(part)) {
+          width = `${part}px`;
+        }
+      }
+
+      if (width) {
+        img.style.width = width;
+        img.style.maxWidth = "100%";
+      }
+      if (height) {
+        img.style.height = height;
+        img.style.objectFit = "cover";
+      }
+
+      if (alignment === "center") {
+        img.style.display = "block";
+        img.style.marginLeft = "auto";
+        img.style.marginRight = "auto";
+      } else if (alignment === "left") {
+        img.style.float = "left";
+        img.style.marginRight = "1.25rem";
+        img.style.marginBottom = "0.75rem";
+        img.style.clear = "left";
+      } else if (alignment === "right") {
+        img.style.float = "right";
+        img.style.marginLeft = "1.25rem";
+        img.style.marginBottom = "0.75rem";
+        img.style.clear = "right";
+      }
+
+      // Clean the alt description so it only shows real caption text
+      const cleanAlt = alt.includes("|") ? alt.split("|")[0].trim() : alt;
+      img.setAttribute("alt", cleanAlt);
+    }
+  });
+}
+
+/**
+ * 7. External Links (open in new tab + add ↗ icon)
  */
 export function initExternalLinks(): void {
   const links = document.querySelectorAll<HTMLAnchorElement>("article .article-body a");
@@ -306,7 +558,7 @@ export function initExternalLinks(): void {
 }
 
 /**
- * 4. Code Block Mac-style Headers & Language Badges
+ * 8. Code Block Mac-style Headers & Language Badges & Copy Button
  */
 export function initCodeBlockHeaders(): void {
   document.querySelectorAll<HTMLElement>("article pre").forEach((pre) => {
@@ -339,7 +591,7 @@ export function initCodeBlockHeaders(): void {
 }
 
 /**
- * 5. Image Lightbox Modal
+ * 9. Image Lightbox Modal
  */
 export function initImageLightbox(): void {
   let lightbox = document.getElementById("image-lightbox");
@@ -419,15 +671,15 @@ export function initImageLightbox(): void {
 }
 
 /**
- * 6. Active Heading Scroll Spy for TOC
+ * 10. Active Heading Scroll Spy for TOC
  */
 export function initTocScrollSpy(): void {
   const tocLinks = document.querySelectorAll<HTMLAnchorElement>("[data-toc-link]");
   if (tocLinks.length === 0) return;
 
-  const headings = Array.from(document.querySelectorAll<HTMLElement>("article h1, article h2, article h3, article h4")).filter(
-    (h) => h.id
-  );
+  const headings = Array.from(
+    document.querySelectorAll<HTMLElement>("article h1, article h2, article h3, article h4")
+  ).filter((h) => h.id);
 
   if (headings.length === 0) return;
 
@@ -463,14 +715,28 @@ export function initTocScrollSpy(): void {
 }
 
 /**
- * Run all initializers
+ * Run all Obsidian Markdown initializers
  */
 export function setupAllMarkdownEnhancements(): void {
+  // Step 1: Strip internal comments
+  initObsidianComments();
+  // Step 2: Transform callouts (with nesting support)
   initObsidianCallouts();
+  // Step 3: Transform highlights
   initObsidianHighlights();
+  // Step 4: Transform inline tags
+  initObsidianInlineTags();
+  // Step 5: Transform wikilinks and embeds
+  initObsidianWikilinks();
+  // Step 6: Image resize & alignment
+  initImageResizeAndAlignment();
+  // Step 7: External links
   initExternalLinks();
+  // Step 8: Code blocks
   initCodeBlockHeaders();
+  // Step 9: Lightbox
   initImageLightbox();
+  // Step 10: TOC spy
   initTocScrollSpy();
 }
 

@@ -12,17 +12,25 @@ html {
 }
 
 /* ==========================================================================
-   Obsidian Callouts Styling
+   Obsidian Callouts Styling & Nesting
    ========================================================================== */
 .callout {
-  margin: 1.5rem 0;
+  margin: 1.25rem 0;
   padding: 0.85rem 1.15rem;
   border-radius: 0.75rem;
   border-left-width: 4px;
   background-color: rgba(var(--callout-color-rgb, 99, 102, 241), 0.08);
   border-left-color: var(--callout-color, #6366f1);
   font-size: 0.95rem;
-  line-height: 1.6;
+  line-height: 1.65;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+}
+
+.callout .callout {
+  margin: 0.85rem 0;
+  padding: 0.65rem 0.95rem;
+  background-color: rgba(var(--callout-color-rgb, 99, 102, 241), 0.12);
+  border-left-width: 3.5px;
 }
 
 .callout-title {
@@ -78,16 +86,76 @@ details.callout[open] .details-arrow {
    ========================================================================== */
 mark,
 .obsidian-highlight {
-  background-color: rgba(253, 224, 71, 0.35);
+  background-color: rgba(253, 224, 71, 0.38);
   color: inherit;
   padding: 0.1em 0.35em;
   border-radius: 0.25em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 [data-theme="dark"] mark,
 [data-theme="dark"] .obsidian-highlight {
-  background-color: rgba(234, 179, 8, 0.25);
+  background-color: rgba(234, 179, 8, 0.28);
   color: #fef08a;
+}
+
+/* ==========================================================================
+   Obsidian Inline Tags (#tag, #category/sub)
+   ========================================================================== */
+.obsidian-inline-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.1em 0.5em;
+  margin: 0 0.15em;
+  font-size: 0.85em;
+  font-weight: 500;
+  border-radius: 9999px;
+  background-color: rgba(var(--fallback-p, 99, 102, 241), 0.12);
+  color: var(--fallback-p, oklch(var(--p)));
+  border: 1px solid rgba(var(--fallback-p, 99, 102, 241), 0.2);
+  text-decoration: none !important;
+  transition: all 0.15s ease-in-out;
+}
+
+.obsidian-inline-tag:hover {
+  background-color: var(--fallback-p, oklch(var(--p)));
+  color: var(--fallback-pc, oklch(var(--pc)));
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Obsidian Wikilinks ([[Note]] / [[Note|Alias]])
+   ========================================================================== */
+.obsidian-wikilink {
+  color: var(--fallback-p, oklch(var(--p)));
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(var(--fallback-p, 99, 102, 241), 0.35);
+  transition: all 0.15s ease-in-out;
+}
+
+.obsidian-wikilink:hover {
+  text-decoration-color: var(--fallback-p, oklch(var(--p)));
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   Obsidian Image Resizing & Floats
+   ========================================================================== */
+article .article-body img {
+  border-radius: 0.75rem;
+  transition: opacity 0.2s ease;
+}
+
+/* Clearfix for floated images */
+article .article-body::after,
+article .article-body section::after,
+article .article-body div::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 /* ==========================================================================
