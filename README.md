@@ -22,6 +22,12 @@ Once the packages are installed you are ready to run astro. Astro comes with a b
 pnpm run dev
 ```
 
+## Editing content
+
+The interface defaults to Chinese and the language switch is in the upper-right corner. Static page settings are stored in [`src/data/site-settings.json`](src/data/site-settings.json), with separate Chinese and English interface labels.
+
+Blog posts and store items remain single-language Markdown content: write each entry in the language you want to publish, without creating duplicate language versions. For the visual editing workflow through Pages CMS, see [`docs/pages-cms.md`](docs/pages-cms.md).
+
 ## Tech Stack
 
 - [Astro](https://astro.build)
