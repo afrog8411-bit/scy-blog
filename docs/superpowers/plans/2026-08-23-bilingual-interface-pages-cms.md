@@ -475,4 +475,3 @@ Report the local commits, `v3.1.0` tag, validation results, Pages CMS URL, and c
 - Pages CMS object fields: https://pagescms.org/docs/configuration/fields/object/
 - Pages CMS media configuration: https://pagescms.org/docs/configuration/media/
 - Pages CMS filename configuration: https://pagescms.org/docs/configuration/content/filename/
-
