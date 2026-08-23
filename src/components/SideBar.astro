@@ -1,6 +1,5 @@
 ---
 import SideBarFooter from "./SideBarFooter.astro";
-import { Image } from "astro:assets";
 import SideBarMenu from "./SideBarMenu.astro";
 import { SITE_SETTINGS } from "../lib/siteSettings";
 const { sideBarActiveItemID } = Astro.props;
@@ -13,7 +12,14 @@ const { sideBarActiveItemID } = Astro.props;
       <a href="/">
         <div class="avatar transition ease-in-out hover:scale-[102%] block m-auto">
           <div class="w-[8.5rem]">
-            <Image class="mask mask-circle" format="webp" width={300} height={300} src={SITE_SETTINGS.shared.profileImage} alt={SITE_SETTINGS.shared.brand} />
+            <img
+              class="mask mask-circle"
+              width="300"
+              height="300"
+              src="/avatar.jpg"
+              alt={SITE_SETTINGS.shared.brand}
+              decoding="async"
+            />
           </div>
         </div>
       </a>
