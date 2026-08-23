@@ -7,9 +7,9 @@ import { SITE_SETTINGS } from "../lib/siteSettings";
 >
 </div>
 
-<div class="social-icons px-4 pb-5 pt-1 flex self-center justify-center sticky bottom-0 bg-base-200">
+<div class={`social-icons px-4 pb-5 pt-1 flex self-center justify-center sticky bottom-0 bg-base-200 ${SITE_SETTINGS.shared.social ? "" : "hidden"}`}>
     <a
-        href={SITE_SETTINGS.shared.social.support}
+        href={SITE_SETTINGS.shared.social?.support ?? ""}
         target="_blank"
         class="mx-3"
         aria-label="Support my work"
@@ -28,7 +28,7 @@ import { SITE_SETTINGS } from "../lib/siteSettings";
             ></path></svg
         >
     </a>
-    <a href={SITE_SETTINGS.shared.social.github} target="_blank" class="mx-3" aria-label="Github" title="Github">
+    <a href={SITE_SETTINGS.shared.social?.github ?? ""} target="_blank" class="mx-3" aria-label="Github" title="Github">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -42,7 +42,7 @@ import { SITE_SETTINGS } from "../lib/siteSettings";
             ></path>
         </svg>
     </a>
-    <a href={SITE_SETTINGS.shared.social.twitter} target="_blank" class="mx-3" aria-label="Twitter" title="Twitter">
+    <a href={SITE_SETTINGS.shared.social?.twitter ?? ""} target="_blank" class="mx-3" aria-label="Twitter" title="Twitter">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -55,7 +55,7 @@ import { SITE_SETTINGS } from "../lib/siteSettings";
         </svg>
     </a>
     <a
-        href={SITE_SETTINGS.shared.social.linkedin}
+        href={SITE_SETTINGS.shared.social?.linkedin ?? ""}
         target="_blank"
         class="mx-3"
         aria-label="Linkedin"
@@ -73,7 +73,7 @@ import { SITE_SETTINGS } from "../lib/siteSettings";
         </svg>
     </a>
 
-    <a href={SITE_SETTINGS.shared.social.rss} target="_blank" class="mx-3" aria-label="RSS Feed" title="RSS Feed">
+    <a href={SITE_SETTINGS.shared.social?.rss ?? ""} target="_blank" class="mx-3" aria-label="RSS Feed" title="RSS Feed">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"

@@ -26,6 +26,54 @@ export function getLocalized(value: LocalizedValue, locale: Locale = DEFAULT_LOC
   return normalized[locale] || normalized[DEFAULT_LOCALE];
 }
 
+const OPTIONAL_CONTENT_ARRAY_PATHS = new Set([
+  "projects.items",
+  "services.items",
+  "cv.education",
+  "cv.experience",
+  "cv.certifications",
+  "cv.skills",
+]);
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+export function mergeLocalized(zh: unknown, en: unknown, path: string): unknown {
+  const isOptionalContentArray = OPTIONAL_CONTENT_ARRAY_PATHS.has(path);
+
+  if (zh === undefined || en === undefined) {
+    if (isOptionalContentArray) return [];
+    throw new Error(`Localized settings shape mismatch at ${path}`);
+  }
+
+  if (Array.isArray(zh) || Array.isArray(en)) {
+    if (!Array.isArray(zh) || !Array.isArray(en)) {
+      if (isOptionalContentArray) return [];
+      throw new Error(`Localized settings length mismatch at ${path}`);
+    }
+    if (isOptionalContentArray && (zh.length === 0 || en.length === 0 || zh.length !== en.length)) {
+      return [];
+    }
+    if (zh.length !== en.length) {
+      throw new Error(`Localized settings length mismatch at ${path}`);
+    }
+    return zh.map((value, index) => mergeLocalized(value, en[index], `${path}[${index}]`));
+  }
+
+  if (isRecord(zh) || isRecord(en)) {
+    if (!isRecord(zh) || !isRecord(en)) {
+      throw new Error(`Localized settings shape mismatch at ${path}`);
+    }
+    const keys = new Set([...Object.keys(zh), ...Object.keys(en)]);
+    return Object.fromEntries(
+      [...keys].map((key) => [key, mergeLocalized(zh[key], en[key], `${path}.${key}`)])
+    );
+  }
+
+  return { zh: String(zh), en: String(en) };
+}
+
 export type LocalizedTree<T> =
   T extends string ? LocalizedString
     : T extends Array<infer Item> ? Array<LocalizedTree<Item>>

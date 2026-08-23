@@ -39,6 +39,14 @@ function requireObjectArray(value, keys, pathName) {
   value.forEach((item, index) => requireStringFields(item, keys, `${pathName}[${index}]`));
 }
 
+function requireOptionalStringArray(value, pathName) {
+  if (value !== undefined) requireStringArray(value, pathName);
+}
+
+function requireOptionalObjectArray(value, keys, pathName) {
+  if (value !== undefined) requireObjectArray(value, keys, pathName);
+}
+
 function validateLocale(locale) {
   const section = settings[locale];
   const pathName = locale;
@@ -56,17 +64,17 @@ function validateLocale(locale) {
   ], `${pathName}.home`);
 
   requireStringFields(section.projects, ["title", "heading"], `${pathName}.projects`);
-  requireObjectArray(section.projects.items, ["title", "image", "description", "url"], `${pathName}.projects.items`);
+  requireOptionalObjectArray(section.projects.items, ["title", "image", "description", "url"], `${pathName}.projects.items`);
   requireStringFields(section.services, ["title", "heading"], `${pathName}.services`);
-  requireObjectArray(section.services.items, ["title", "image", "description", "url"], `${pathName}.services.items`);
+  requireOptionalObjectArray(section.services.items, ["title", "image", "description", "url"], `${pathName}.services.items`);
 
   requireStringFields(section.cv, [
     "title", "profileHeading", "profile", "educationHeading", "experienceHeading", "certificationsHeading", "skillsHeading",
   ], `${pathName}.cv`);
-  requireObjectArray(section.cv.education, ["title", "subtitle"], `${pathName}.cv.education`);
-  requireObjectArray(section.cv.experience, ["title", "subtitle", "description"], `${pathName}.cv.experience`);
-  requireObjectArray(section.cv.certifications, ["name", "url"], `${pathName}.cv.certifications`);
-  requireStringArray(section.cv.skills, `${pathName}.cv.skills`);
+  requireOptionalObjectArray(section.cv.education, ["title", "subtitle"], `${pathName}.cv.education`);
+  requireOptionalObjectArray(section.cv.experience, ["title", "subtitle", "description"], `${pathName}.cv.experience`);
+  requireOptionalObjectArray(section.cv.certifications, ["name", "url"], `${pathName}.cv.certifications`);
+  requireOptionalStringArray(section.cv.skills, `${pathName}.cv.skills`);
 
   requireStringFields(section.blog, ["title"], `${pathName}.blog`);
   requireStringFields(section.store, ["title"], `${pathName}.store`);
@@ -75,23 +83,12 @@ function validateLocale(locale) {
 
 requireObject(settings.shared, "shared");
 requireStringFields(settings.shared, ["brand", "profileImage", "contactEmail"], "shared");
-requireStringFields(settings.shared.social, ["support", "github", "twitter", "linkedin", "rss"], "shared.social");
+if (settings.shared.social !== undefined) {
+  requireStringFields(settings.shared.social, ["support", "github", "twitter", "linkedin", "rss"], "shared.social");
+}
 
 for (const locale of ["zh", "en"]) {
   validateLocale(locale);
-}
-
-const pairedArrays = [
-  ["projects.items", settings.zh.projects.items, settings.en.projects.items],
-  ["services.items", settings.zh.services.items, settings.en.services.items],
-  ["cv.education", settings.zh.cv.education, settings.en.cv.education],
-  ["cv.experience", settings.zh.cv.experience, settings.en.cv.experience],
-  ["cv.certifications", settings.zh.cv.certifications, settings.en.cv.certifications],
-  ["cv.skills", settings.zh.cv.skills, settings.en.cv.skills],
-];
-
-for (const [name, chinese, english] of pairedArrays) {
-  assert.equal(chinese.length, english.length, `${name} locale lengths differ`);
 }
 
 console.log("site settings valid");
