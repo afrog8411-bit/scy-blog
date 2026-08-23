@@ -5,13 +5,13 @@
     "contactEmail": "afrog8411@gmail.com"
   },
   "zh": {
-    "siteTitle": "Manuel Ernesto | 个人网站",
+    "siteTitle": "施辰阳| 个人网站",
     "siteDescription": "个人项目、经历、服务与文章。",
     "navigation": {
       "home": "首页",
-      "projects": "项目",
-      "services": "服务",
-      "store": "商店",
+      "projects": "资源",
+      "services": "待补充",
+      "store": "待补充",
       "blog": "博客",
       "cv": "简历",
       "contact": "联系"
