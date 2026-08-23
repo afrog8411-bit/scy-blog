@@ -1,0 +1,186 @@
+{
+  "shared": {
+    "brand": "Manuel Ernesto ⚡️",
+    "profileImage": "/profile.webp",
+    "contactEmail": "contact.manuelernestog@gmail.com",
+    "social": {
+      "support": "https://manuelernestog.github.io/support-my-work/",
+      "github": "https://github.com/manuelernestog",
+      "twitter": "https://twitter.com/manuelernestog",
+      "linkedin": "https://www.linkedin.com/in/manuelernestogr",
+      "rss": "/rss.xml"
+    }
+  },
+  "zh": {
+    "siteTitle": "Manuel Ernesto | 个人网站",
+    "siteDescription": "个人项目、经历、服务与文章。",
+    "navigation": {
+      "home": "首页",
+      "projects": "项目",
+      "services": "服务",
+      "store": "商店",
+      "blog": "博客",
+      "cv": "简历",
+      "contact": "联系"
+    },
+    "common": {
+      "recentPosts": "较新的文章",
+      "olderPosts": "较早的文章",
+      "previousPage": "上一页",
+      "nextPage": "下一页",
+      "noPostsTitle": "暂时没有文章",
+      "noPostsMessage": "目前还没有可展示的文章，请稍后再来。",
+      "lastUpdated": "最后更新于",
+      "buyNow": "立即购买",
+      "home": "首页",
+      "notFoundMessage": "找不到你要访问的页面。",
+      "developedBy": "网站由",
+      "usingTemplate": "使用 Astrofy 模板构建"
+    },
+    "home": {
+      "greeting": "你好 👋",
+      "name": "Manuel Ernesto",
+      "headline": "软件工程师与创业者",
+      "intro": "这是一个使用 Astro 和 TailwindCSS 构建的个人网站。",
+      "connectLabel": "联系我",
+      "connectUrl": "https://twitter.com/manuelernestog",
+      "templateLabel": "获取模板",
+      "templateUrl": "https://github.com/manuelernestog/astrofy",
+      "projectsHeading": "我的项目 </>",
+      "blogHeading": "最新文章"
+    },
+    "projects": {
+      "title": "项目",
+      "heading": "项目展示",
+      "items": [
+        { "title": "示例项目 1", "image": "/post_img.webp", "description": "这是一个示例项目描述。", "url": "#", "badge": "NEW" },
+        { "title": "示例项目 2", "image": "/post_img.webp", "description": "这是一个示例项目描述。", "url": "#", "badge": "" },
+        { "title": "示例项目 3", "image": "/post_img.webp", "description": "这是一个示例项目描述。", "url": "#", "badge": "FOSS" },
+        { "title": "示例项目 4", "image": "/post_img.webp", "description": "这是一个示例项目描述。", "url": "#", "badge": "" },
+        { "title": "示例项目 5", "image": "/post_img.webp", "description": "这是一个示例项目描述。", "url": "#", "badge": "" }
+      ]
+    },
+    "services": {
+      "title": "服务",
+      "heading": "服务内容",
+      "items": [
+        { "title": "服务 1", "image": "/post_img.webp", "description": "这是一个示例服务描述。", "url": "#", "badge": "NEW" },
+        { "title": "服务 2", "image": "/post_img.webp", "description": "这是一个示例服务描述。", "url": "#", "badge": "" },
+        { "title": "服务 3", "image": "/post_img.webp", "description": "这是一个示例服务描述。", "url": "#", "badge": "NEW" },
+        { "title": "服务 4", "image": "/post_img.webp", "description": "这是一个示例服务描述。", "url": "#", "badge": "" }
+      ]
+    },
+    "cv": {
+      "title": "简历",
+      "profileHeading": "个人简介",
+      "profile": "这是一段个人简介示例内容。",
+      "educationHeading": "教育经历",
+      "education": [
+        { "title": "学位名称", "subtitle": "[开始年份] 至 [结束年份]，[学校名称]，[城市]，[国家]" },
+        { "title": "学位名称", "subtitle": "[开始年份] 至 [结束年份]，[学校名称]，[城市]，[国家]" }
+      ],
+      "experienceHeading": "工作经历",
+      "experience": [
+        { "title": "项目或公司职位", "subtitle": "[开始日期] 至 [结束日期]，[公司]，[城市]，[国家]", "description": "这是一段工作经历示例内容。" },
+        { "title": "项目或公司职位", "subtitle": "[开始日期] 至 [结束日期]，[公司]，[城市]，[国家]", "description": "这是一段工作经历示例内容。" },
+        { "title": "项目或公司职位", "subtitle": "[开始日期] 至 [结束日期]，[公司]，[城市]，[国家]", "description": "这是一段工作经历示例内容。" }
+      ],
+      "certificationsHeading": "证书",
+      "certifications": [
+        { "name": "证书名称（含链接）", "url": "#" },
+        { "name": "证书名称（含链接）", "url": "#" }
+      ],
+      "skillsHeading": "技能",
+      "skills": ["技能名称", "技能名称", "技能名称", "技能名称", "技能名称", "技能名称", "技能名称", "技能名称", "技能名称", "技能名称", "技能名称", "技能名称", "技能名称", "技能名称", "技能名称"]
+    },
+    "blog": { "title": "博客" },
+    "store": { "title": "商店" },
+    "notFound": { "title": "404：页面不存在", "homeLabel": "返回首页" }
+  },
+  "en": {
+    "siteTitle": "Astrofy | Personal Portfolio Website Template",
+    "siteDescription": "Astrofy is a free and open-source template for your Personal Portfolio Website built with Astro and TailwindCSS.",
+    "navigation": {
+      "home": "Home",
+      "projects": "Projects",
+      "services": "Services",
+      "store": "Store",
+      "blog": "Blog",
+      "cv": "CV",
+      "contact": "Contact"
+    },
+    "common": {
+      "recentPosts": "Recent posts",
+      "olderPosts": "Older Posts",
+      "previousPage": "Previous page",
+      "nextPage": "Next page",
+      "noPostsTitle": "Sorry!",
+      "noPostsMessage": "There are no blog posts to show at the moment. Check back later!",
+      "lastUpdated": "Last updated on",
+      "buyNow": "Buy Now",
+      "home": "Home",
+      "notFoundMessage": "The page you're looking for couldn't be found.",
+      "developedBy": "Developed by",
+      "usingTemplate": "using Astrofy Template ⚡️"
+    },
+    "home": {
+      "greeting": "Hey there 👋",
+      "name": "Manuel Ernesto",
+      "headline": "Software Engineer and Entrepreneur",
+      "intro": "This is Astrofy, a free and open-source template for your Personal Portfolio Website built with Astro and TailwindCSS.",
+      "connectLabel": "Let's connect!",
+      "connectUrl": "https://twitter.com/manuelernestog",
+      "templateLabel": "Get This template",
+      "templateUrl": "https://github.com/manuelernestog/astrofy",
+      "projectsHeading": "My last projects </>",
+      "blogHeading": "Latest from blog"
+    },
+    "projects": {
+      "title": "Projects",
+      "heading": "Projects Header",
+      "items": [
+        { "title": "Demo Project 1", "image": "/post_img.webp", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "url": "#", "badge": "NEW" },
+        { "title": "Demo Project 2", "image": "/post_img.webp", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "url": "#", "badge": "" },
+        { "title": "Demo Project 3", "image": "/post_img.webp", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "url": "#", "badge": "FOSS" },
+        { "title": "Demo Project 4", "image": "/post_img.webp", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "url": "#", "badge": "" },
+        { "title": "Demo Project 5", "image": "/post_img.webp", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "url": "#", "badge": "" }
+      ]
+    },
+    "services": {
+      "title": "Projects",
+      "heading": "Services Header",
+      "items": [
+        { "title": "Service 1", "image": "/post_img.webp", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "url": "#", "badge": "NEW" },
+        { "title": "Service 2", "image": "/post_img.webp", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "url": "#", "badge": "" },
+        { "title": "Service 3", "image": "/post_img.webp", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "url": "#", "badge": "NEW" },
+        { "title": "Service 4", "image": "/post_img.webp", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "url": "#", "badge": "" }
+      ]
+    },
+    "cv": {
+      "title": "Resume",
+      "profileHeading": "Profile",
+      "profile": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "educationHeading": "Education",
+      "education": [
+        { "title": "Title Name", "subtitle": "[start year] to [end year] at [Study Center Name], [City], [Country]" },
+        { "title": "Title Name", "subtitle": "[start year] to [end year] at [Study Center Name], [City], [Country]" }
+      ],
+      "experienceHeading": "Experience",
+      "experience": [
+        { "title": "Job Title at Project or Company Name", "subtitle": "From [Start Date] to [End Date] at [Company], [City], [Country]", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+        { "title": "Job Title at Project or Company Name", "subtitle": "From [Start Date] to [End Date] at [Company], [City], [Country]", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+        { "title": "Job Title at Project or Company Name", "subtitle": "From [Start Date] to [End Date] at [Company], [City], [Country]", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." }
+      ],
+      "certificationsHeading": "Certifications",
+      "certifications": [
+        { "name": "Certification Name (with link)", "url": "#" },
+        { "name": "Certification Name (with link)", "url": "#" }
+      ],
+      "skillsHeading": "Skills",
+      "skills": ["Skill Name", "Skill Name", "Skill Name", "Skill Name", "Skill Name", "Skill Name", "Skill Name", "Skill Name", "Skill Name", "Skill Name", "Skill Name", "Skill Name", "Skill Name", "Skill Name", "Skill Name"]
+    },
+    "blog": { "title": "Blog" },
+    "store": { "title": "Store" },
+    "notFound": { "title": "404: Not Found", "homeLabel": "Home" }
+  }
+}

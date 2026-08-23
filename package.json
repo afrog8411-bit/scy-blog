@@ -10,7 +10,9 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "validate:site": "node scripts/validate-site-settings.mjs",
+    "test:localization": "node --experimental-strip-types scripts/test-localization.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^2.0.3",
