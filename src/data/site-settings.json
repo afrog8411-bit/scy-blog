@@ -37,8 +37,8 @@
       "intro": "一个网站",
       "connectLabel": "联系我",
       "connectUrl": "2912408387@qq.com",
-      "templateLabel": "",
-      "templateUrl": "",
+      "templateLabel": "我的仓库--然鹅并没有什么东西",
+      "templateUrl": "https://github.com/afrog8411-bit",
       "projectsHeading": "我的项目 </>",
       "blogHeading": "最新文章"
     },
@@ -119,125 +119,26 @@
       "intro": "This is Astrofy, a free and open-source template for your Personal Portfolio Website built with Astro and TailwindCSS.",
       "connectLabel": "Let's connect!",
       "connectUrl": "https://twitter.com/manuelernestog",
-      "templateLabel": "",
-      "templateUrl": "",
+      "templateLabel": "Click",
+      "templateUrl": "https://github.com/manuelernestog/astrofy",
       "projectsHeading": "My last projects </>",
       "blogHeading": "Latest from blog"
     },
     "projects": {
       "title": "Projects",
-      "heading": "Projects Header",
-      "items": [
-        {
-          "title": "Demo Project 1",
-          "image": "/post_img.webp",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "url": "#",
-          "badge": "NEW"
-        },
-        {
-          "title": "Demo Project 2",
-          "image": "/post_img.webp",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "url": "#"
-        },
-        {
-          "title": "Demo Project 3",
-          "image": "/post_img.webp",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "url": "#",
-          "badge": "FOSS"
-        },
-        {
-          "title": "Demo Project 4",
-          "image": "/post_img.webp",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "url": "#"
-        },
-        {
-          "title": "Demo Project 5",
-          "image": "/post_img.webp",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "url": "#"
-        }
-      ]
+      "heading": "Projects Header"
     },
     "services": {
       "title": "Services",
-      "heading": "Services Header",
-      "items": [
-        {
-          "title": "Service 1",
-          "image": "/post_img.webp",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "url": "#",
-          "badge": "NEW"
-        },
-        {
-          "title": "Service 2",
-          "image": "/post_img.webp",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "url": "#"
-        },
-        {
-          "title": "Service 3",
-          "image": "/post_img.webp",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "url": "#",
-          "badge": "NEW"
-        },
-        {
-          "title": "Service 4",
-          "image": "/post_img.webp",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "url": "#"
-        }
-      ]
+      "heading": "Services Header"
     },
     "cv": {
       "title": "Resume",
       "profileHeading": "Profile",
       "profile": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
       "educationHeading": "Education",
-      "education": [
-        {
-          "title": "Title Name",
-          "subtitle": "[start year] to [end year] at [Study Center Name], [City], [Country]"
-        },
-        {
-          "title": "Title Name",
-          "subtitle": "[start year] to [end year] at [Study Center Name], [City], [Country]"
-        }
-      ],
       "experienceHeading": "Experience",
-      "experience": [
-        {
-          "title": "Job Title at Project or Company Name",
-          "subtitle": "From [Start Date] to [End Date] at [Company], [City], [Country]",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        },
-        {
-          "title": "Job Title at Project or Company Name",
-          "subtitle": "From [Start Date] to [End Date] at [Company], [City], [Country]",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        },
-        {
-          "title": "Job Title at Project or Company Name",
-          "subtitle": "From [Start Date] to [End Date] at [Company], [City], [Country]",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        }
-      ],
       "certificationsHeading": "Certifications",
-      "certifications": [
-        {
-          "name": "Certification Name (with link)",
-          "url": "#"
-        },
-        {
-          "name": "Certification Name (with link)",
-          "url": "#"
-        }
-      ],
       "skillsHeading": "Skills",
       "skills": [
         "Skill Name",
