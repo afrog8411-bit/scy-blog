@@ -1,0 +1,6 @@
+allowBuilds:
+  esbuild: true
+  sharp: true
+overrides:
+  "astro>zod": "3.25.76"
+  "@astrojs/sitemap>sitemap": "7.1.1"
