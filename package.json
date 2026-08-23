@@ -12,7 +12,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "validate:site": "node scripts/validate-site-settings.mjs",
-    "test:localization": "node --experimental-strip-types scripts/test-localization.mjs"
+    "test:localization": "node --experimental-strip-types scripts/test-localization.mjs",
+    "test:avatar": "node --experimental-strip-types scripts/test-avatar.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^2.0.3",
