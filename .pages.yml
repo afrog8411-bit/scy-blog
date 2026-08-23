@@ -1,0 +1,249 @@
+media:
+  input: public/uploads
+  output: /uploads
+
+content:
+  - name: site
+    label: Website settings
+    type: group
+    items:
+      - name: settings
+        label: Site settings
+        type: file
+        path: src/data/site-settings.json
+        format: json
+        fields:
+          - name: shared
+            label: Shared settings
+            type: object
+            fields:
+              - name: brand
+                label: Brand
+                type: string
+                required: true
+              - name: profileImage
+                label: Profile image
+                type: image
+                required: true
+              - name: contactEmail
+                label: Contact email
+                type: string
+              - name: social
+                label: Social links
+                type: object
+                fields:
+                  - name: support
+                    label: Support link
+                    type: string
+                  - name: github
+                    label: GitHub
+                    type: string
+                  - name: twitter
+                    label: Twitter
+                    type: string
+                  - name: linkedin
+                    label: LinkedIn
+                    type: string
+                  - name: rss
+                    label: RSS
+                    type: string
+          - name: zh
+            label: 中文设置
+            type: object
+            fields: &locale_fields
+              - name: siteTitle
+                label: Site title
+                type: string
+                required: true
+              - name: siteDescription
+                label: Site description
+                type: text
+                required: true
+              - name: navigation
+                label: Navigation
+                type: object
+                fields:
+                  - { name: home, label: Home, type: string, required: true }
+                  - { name: projects, label: Projects, type: string, required: true }
+                  - { name: services, label: Services, type: string, required: true }
+                  - { name: store, label: Store, type: string, required: true }
+                  - { name: blog, label: Blog, type: string, required: true }
+                  - { name: cv, label: CV, type: string, required: true }
+                  - { name: contact, label: Contact, type: string, required: true }
+              - name: common
+                label: Common labels
+                type: object
+                fields:
+                  - { name: recentPosts, label: Recent posts, type: string, required: true }
+                  - { name: olderPosts, label: Older posts, type: string, required: true }
+                  - { name: previousPage, label: Previous page, type: string, required: true }
+                  - { name: nextPage, label: Next page, type: string, required: true }
+                  - { name: noPostsTitle, label: Empty title, type: string, required: true }
+                  - { name: noPostsMessage, label: Empty message, type: text, required: true }
+                  - { name: lastUpdated, label: Last updated, type: string, required: true }
+                  - { name: buyNow, label: Buy now, type: string, required: true }
+                  - { name: home, label: Home, type: string, required: true }
+                  - { name: notFoundMessage, label: Not found message, type: string, required: true }
+                  - { name: developedBy, label: Developed by, type: string, required: true }
+                  - { name: usingTemplate, label: Template credit, type: string, required: true }
+              - name: home
+                label: Home page
+                type: object
+                fields:
+                  - { name: greeting, label: Greeting, type: string, required: true }
+                  - { name: name, label: Name, type: string, required: true }
+                  - { name: headline, label: Headline, type: string, required: true }
+                  - { name: intro, label: Introduction, type: text, required: true }
+                  - { name: connectLabel, label: Connect button, type: string, required: true }
+                  - { name: connectUrl, label: Connect URL, type: string, required: true }
+                  - { name: templateLabel, label: Template button, type: string, required: true }
+                  - { name: templateUrl, label: Template URL, type: string, required: true }
+                  - { name: projectsHeading, label: Projects heading, type: string, required: true }
+                  - { name: blogHeading, label: Blog heading, type: string, required: true }
+              - name: projects
+                label: Projects page
+                type: object
+                fields:
+                  - { name: title, label: Page title, type: string, required: true }
+                  - { name: heading, label: Heading, type: string, required: true }
+                  - name: items
+                    label: Projects
+                    type: object
+                    list: true
+                    fields:
+                      - { name: title, label: Title, type: string, required: true }
+                      - { name: image, label: Image, type: image, required: true }
+                      - { name: description, label: Description, type: text, required: true }
+                      - { name: url, label: URL, type: string, required: true }
+                      - { name: badge, label: Badge, type: string }
+              - name: services
+                label: Services page
+                type: object
+                fields:
+                  - { name: title, label: Page title, type: string, required: true }
+                  - { name: heading, label: Heading, type: string, required: true }
+                  - name: items
+                    label: Services
+                    type: object
+                    list: true
+                    fields:
+                      - { name: title, label: Title, type: string, required: true }
+                      - { name: image, label: Image, type: image, required: true }
+                      - { name: description, label: Description, type: text, required: true }
+                      - { name: url, label: URL, type: string, required: true }
+                      - { name: badge, label: Badge, type: string }
+              - name: cv
+                label: CV page
+                type: object
+                fields:
+                  - { name: title, label: Page title, type: string, required: true }
+                  - { name: profileHeading, label: Profile heading, type: string, required: true }
+                  - { name: profile, label: Profile, type: text, required: true }
+                  - { name: educationHeading, label: Education heading, type: string, required: true }
+                  - name: education
+                    label: Education
+                    type: object
+                    list: true
+                    fields:
+                      - { name: title, label: Title, type: string, required: true }
+                      - { name: subtitle, label: Subtitle, type: string, required: true }
+                  - { name: experienceHeading, label: Experience heading, type: string, required: true }
+                  - name: experience
+                    label: Experience
+                    type: object
+                    list: true
+                    fields:
+                      - { name: title, label: Title, type: string, required: true }
+                      - { name: subtitle, label: Subtitle, type: string, required: true }
+                      - { name: description, label: Description, type: text, required: true }
+                  - { name: certificationsHeading, label: Certifications heading, type: string, required: true }
+                  - name: certifications
+                    label: Certifications
+                    type: object
+                    list: true
+                    fields:
+                      - { name: name, label: Name, type: string, required: true }
+                      - { name: url, label: URL, type: string, required: true }
+                  - { name: skillsHeading, label: Skills heading, type: string, required: true }
+                  - name: skills
+                    label: Skills
+                    type: string
+                    list: true
+              - name: blog
+                label: Blog settings
+                type: object
+                fields:
+                  - { name: title, label: Page title, type: string, required: true }
+              - name: store
+                label: Store settings
+                type: object
+                fields:
+                  - { name: title, label: Page title, type: string, required: true }
+              - name: notFound
+                label: 404 page
+                type: object
+                fields:
+                  - { name: title, label: Page title, type: string, required: true }
+                  - { name: homeLabel, label: Home button, type: string, required: true }
+          - name: en
+            label: English settings
+            type: object
+            fields: *locale_fields
+  - name: content
+    label: Content
+    type: group
+    items:
+      - name: blog
+        label: Blog posts
+        type: collection
+        path: src/content/blog
+        format: yaml-frontmatter
+        filename:
+          template: "{primary}.md"
+          field: create
+        view:
+          primary: title
+          fields: [title, pubDate, badge]
+          sort: [pubDate]
+          default:
+            sort: pubDate
+            order: desc
+        fields:
+          - { name: title, label: Title, type: string, required: true }
+          - { name: description, label: Description, type: text, required: true }
+          - { name: pubDate, label: Publication date, type: date, required: true }
+          - { name: updatedDate, label: Updated date, type: string }
+          - { name: heroImage, label: Hero image, type: image }
+          - { name: badge, label: Badge, type: string }
+          - name: tags
+            label: Tags
+            type: string
+            list: true
+          - { name: body, label: Body, type: rich-text }
+      - name: store
+        label: Store items
+        type: collection
+        path: src/content/store
+        format: yaml-frontmatter
+        filename:
+          template: "{primary}.md"
+          field: create
+        view:
+          primary: title
+          fields: [title, updatedDate, pricing, badge]
+          sort: [updatedDate]
+          default:
+            sort: updatedDate
+            order: desc
+        fields:
+          - { name: title, label: Title, type: string, required: true }
+          - { name: description, label: Description, type: text, required: true }
+          - { name: custom_link_label, label: Custom link label, type: string, required: true }
+          - { name: custom_link, label: Custom link, type: string }
+          - { name: updatedDate, label: Updated date, type: date, required: true }
+          - { name: pricing, label: Price, type: string }
+          - { name: oldPricing, label: Old price, type: string }
+          - { name: badge, label: Badge, type: string }
+          - { name: checkoutUrl, label: Checkout URL, type: string }
+          - { name: heroImage, label: Hero image, type: image }
+          - { name: body, label: Body, type: rich-text }
