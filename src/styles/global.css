@@ -1,14 +1,53 @@
 /* ==========================================================================
-   Global Smooth Scrolling & Mobile-Optimized Typography
+   Global Typography & Editorial System (Newsreader + JetBrains Mono)
    ========================================================================== */
+:root {
+  --font-serif: 'Newsreader', "Songti SC", "SimSun", "STSong", Georgia, serif;
+  --font-sans: 'Newsreader', -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
+  font-family: var(--font-sans);
   word-break: break-word;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings with Editorial Serif Character */
+h1, h2, h3, h4, h5, h6,
+.font-serif,
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  font-family: var(--font-serif);
+  letter-spacing: -0.015em;
+}
+
+/* Article Prose Typography */
+.prose {
+  font-family: var(--font-sans);
+  line-height: 1.8;
+}
+
+.prose p {
+  line-height: 1.8;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+/* Monospace & Geek Accents */
+code, pre, kbd, samp,
+.font-mono,
+.obsidian-inline-tag,
+.code-header,
+.code-lang-badge,
+.copy-code-btn {
+  font-family: var(--font-mono) !important;
 }
 
 ::selection {
@@ -57,14 +96,14 @@ body {
    Obsidian Callouts Styling & Mobile Adaptation
    ========================================================================== */
 .callout {
-  margin: 1.1rem 0;
-  padding: 0.75rem 0.95rem;
-  border-radius: 0.75rem;
+  margin: 1.25rem 0;
+  padding: 0.85rem 1.05rem;
+  border-radius: 0.8rem;
   border-left-width: 4px;
   background-color: rgba(var(--callout-color-rgb, 99, 102, 241), 0.07);
   border-left-color: var(--callout-color, #6366f1);
-  font-size: 0.92rem;
-  line-height: 1.65;
+  font-size: 0.94rem;
+  line-height: 1.7;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
   border-top: 1px solid rgba(var(--callout-color-rgb, 99, 102, 241), 0.12);
   border-right: 1px solid rgba(var(--callout-color-rgb, 99, 102, 241), 0.12);
@@ -74,44 +113,43 @@ body {
 
 @media (min-width: 640px) {
   .callout {
-    margin: 1.35rem 0;
-    padding: 0.95rem 1.25rem;
+    margin: 1.45rem 0;
+    padding: 1rem 1.3rem;
     border-radius: 0.85rem;
-    font-size: 0.95rem;
-    line-height: 1.7;
+    font-size: 0.98rem;
+    line-height: 1.75;
   }
 }
 
 .callout .callout {
-  margin: 0.65rem 0;
-  padding: 0.65rem 0.85rem;
+  margin: 0.75rem 0;
+  padding: 0.7rem 0.95rem;
   background-color: rgba(var(--callout-color-rgb, 99, 102, 241), 0.12);
   border-left-width: 3.5px;
 }
 
 @media (min-width: 640px) {
   .callout .callout {
-    margin: 0.85rem 0;
-    padding: 0.75rem 1rem;
+    margin: 0.9rem 0;
+    padding: 0.8rem 1.1rem;
   }
 }
 
 .callout-title {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
-  font-weight: 600;
+  gap: 0.5rem;
+  font-weight: 700;
   color: var(--callout-color, #6366f1);
-  margin-bottom: 0.35rem;
-  font-size: 0.92em;
+  margin-bottom: 0.4rem;
+  font-size: 0.95em;
   user-select: none;
 }
 
 @media (min-width: 640px) {
   .callout-title {
     gap: 0.55rem;
-    font-size: 1em;
-    margin-bottom: 0.4rem;
+    font-size: 1.02em;
   }
 }
 
@@ -119,15 +157,15 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.1rem;
-  height: 1.1rem;
+  width: 1.15rem;
+  height: 1.15rem;
   flex-shrink: 0;
 }
 
 @media (min-width: 640px) {
   .callout-icon {
-    width: 1.2rem;
-    height: 1.2rem;
+    width: 1.25rem;
+    height: 1.25rem;
   }
 }
 
@@ -187,9 +225,9 @@ mark,
 .obsidian-inline-tag {
   display: inline-flex;
   align-items: center;
-  padding: 0.08em 0.45em;
+  padding: 0.08em 0.5em;
   margin: 0 0.15em;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: var(--font-mono) !important;
   font-size: 0.82em;
   font-weight: 500;
   border-radius: 9999px;
@@ -228,7 +266,7 @@ mark,
    Obsidian Image Resizing & Floats
    ========================================================================== */
 article .article-body img {
-  border-radius: 0.75rem;
+  border-radius: 0.85rem;
   transition: transform 0.2s ease, opacity 0.2s ease;
   box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
 }
@@ -267,7 +305,7 @@ article .article-body div::after {
 }
 
 /* ==========================================================================
-   Code Blocks & Terminal Header (Geek Aesthetics)
+   Code Blocks & Terminal Header (JetBrains Mono)
    ========================================================================== */
 .prose pre {
   position: relative;
@@ -276,6 +314,7 @@ article .article-body div::after {
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 6px 12px -3px rgba(0, 0, 0, 0.15), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   backdrop-filter: blur(8px);
+  font-family: var(--font-mono) !important;
   font-size: 0.82em;
   line-height: 1.6;
 }
@@ -337,7 +376,7 @@ article .article-body div::after {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.5);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: var(--font-mono) !important;
 }
 
 .prose pre .copy-code-btn {
@@ -349,7 +388,7 @@ article .article-body div::after {
   gap: 0.2rem;
   padding: 0.18rem 0.45rem;
   font-size: 0.68rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: var(--font-mono) !important;
   border-radius: 0.35rem;
   background-color: rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.8);
@@ -376,7 +415,7 @@ article .article-body div::after {
    ========================================================================== */
 .prose :not(pre) > code {
   font-size: 0.85em;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: var(--font-mono) !important;
   font-weight: 500;
   padding: 0.18em 0.42em;
   border-radius: 0.35rem;
@@ -393,7 +432,7 @@ article .article-body div::after {
 kbd {
   display: inline-block;
   padding: 0.12em 0.4em;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: var(--font-mono) !important;
   font-size: 0.75em;
   font-weight: 600;
   line-height: 1;
