@@ -38,127 +38,27 @@
       "connectLabel": "联系我",
       "connectUrl": "2912408387@qq.com",
       "templateLabel": "获取模板",
-      "templateUrl": "https://github.com/manuelernestog/astrofy",
+      "templateUrl": "https://github.com/afrog8411-bit",
       "projectsHeading": "我的项目 </>",
       "blogHeading": "最新文章"
     },
     "projects": {
       "title": "项目",
-      "heading": "项目展示",
-      "items": [
-        {
-          "title": "示例项目 1",
-          "image": "/post_img.webp",
-          "description": "这是一个示例项目描述。",
-          "url": "#",
-          "badge": "NEW"
-        },
-        {
-          "title": "示例项目 2",
-          "image": "/post_img.webp",
-          "description": "这是一个示例项目描述。",
-          "url": "#"
-        },
-        {
-          "title": "示例项目 3",
-          "image": "/post_img.webp",
-          "description": "这是一个示例项目描述。",
-          "url": "#",
-          "badge": "FOSS"
-        },
-        {
-          "title": "示例项目 4",
-          "image": "/post_img.webp",
-          "description": "这是一个示例项目描述。",
-          "url": "#"
-        },
-        {
-          "title": "示例项目 5",
-          "image": "/post_img.webp",
-          "description": "这是一个示例项目描述。",
-          "url": "#"
-        }
-      ]
+      "heading": "项目展示"
     },
     "services": {
       "title": "服务",
-      "heading": "服务内容",
-      "items": [
-        {
-          "title": "服务 1",
-          "image": "/post_img.webp",
-          "description": "这是一个示例服务描述。",
-          "url": "#",
-          "badge": "NEW"
-        },
-        {
-          "title": "服务 2",
-          "image": "/post_img.webp",
-          "description": "这是一个示例服务描述。",
-          "url": "#"
-        },
-        {
-          "title": "服务 3",
-          "image": "/post_img.webp",
-          "description": "这是一个示例服务描述。",
-          "url": "#",
-          "badge": "NEW"
-        },
-        {
-          "title": "服务 4",
-          "image": "/post_img.webp",
-          "description": "这是一个示例服务描述。",
-          "url": "#"
-        }
-      ]
+      "heading": "服务内容"
     },
     "cv": {
       "title": "简历",
       "profileHeading": "个人简介",
       "profile": "这是一段个人简介示例内容。",
       "educationHeading": "教育经历",
-      "education": [
-        {
-          "title": "学位名称",
-          "subtitle": "[开始年份] 至 [结束年份]，[学校名称]，[城市]，[国家]"
-        },
-        {
-          "title": "学位名称",
-          "subtitle": "[开始年份] 至 [结束年份]，[学校名称]，[城市]，[国家]"
-        }
-      ],
       "experienceHeading": "工作经历",
-      "experience": [
-        {
-          "title": "项目或公司职位",
-          "subtitle": "[开始日期] 至 [结束日期]，[公司]，[城市]，[国家]",
-          "description": "这是一段工作经历示例内容。"
-        },
-        {
-          "title": "项目或公司职位",
-          "subtitle": "[开始日期] 至 [结束日期]，[公司]，[城市]，[国家]",
-          "description": "这是一段工作经历示例内容。"
-        },
-        {
-          "title": "项目或公司职位",
-          "subtitle": "[开始日期] 至 [结束日期]，[公司]，[城市]，[国家]",
-          "description": "这是一段工作经历示例内容。"
-        }
-      ],
       "certificationsHeading": "证书",
-      "certifications": [
-        {
-          "name": "证书名称（含链接）",
-          "url": "#"
-        },
-        {
-          "name": "证书名称（含链接）",
-          "url": "#"
-        }
-      ],
       "skillsHeading": "技能",
       "skills": [
-        "技能名称",
         "技能名称",
         "技能名称",
         "技能名称",
