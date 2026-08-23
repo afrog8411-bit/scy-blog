@@ -31,10 +31,10 @@
       "usingTemplate": "使用 Astrofy 模板构建"
     },
     "home": {
-      "greeting": "你好 👋",
+      "greeting": "hello",
       "name": "施辰阳",
       "headline": "人为自己立规矩然后活着",
-      "intro": "一个网站",
+      "intro": "等待填充",
       "connectLabel": "联系我",
       "connectUrl": "2912408387@qq.com",
       "templateLabel": "我的仓库--然鹅并没有什么东西",
