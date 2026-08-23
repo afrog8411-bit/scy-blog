@@ -39,60 +39,65 @@ const {
 
 const common = localizeSection("common");
 dayjs.extend(localizedFormat);
-const displayDate = dayjs(pubDate).format("ll");
+const displayDate = dayjs(pubDate).format("YYYY-MM-DD");
 const readingStats = calculateReadingTime(rawContent);
 const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 3);
 ---
 
 <BaseLayout title={title} description={description} image={heroImage} ogType="article">
-  <!-- Reading Progress Bar -->
-  <div id="reading-progress" class="fixed top-0 left-0 h-[3px] bg-primary z-50 transition-[width] duration-75 ease-out w-0 pointer-events-none"></div>
+  <!-- Glowing Geek Reading Progress Bar -->
+  <div
+    id="reading-progress"
+    class="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-primary via-indigo-500 to-accent shadow-[0_0_10px_rgba(99,102,241,0.7)] z-50 transition-[width] duration-75 ease-out w-0 pointer-events-none"
+  ></div>
 
   <main class="md:flex md:justify-center">
-    <article class="prose prose-lg dark:prose-invert max-w-[750px] w-full">
+    <article class="prose prose-lg dark:prose-invert max-w-[780px] w-full">
       <!-- Back to blog navigation -->
       <div class="not-prose mb-6">
         <a
           href="/blog"
-          class="inline-flex items-center gap-1.5 text-sm font-medium text-base-content/60 hover:text-primary transition-colors group"
+          class="inline-flex items-center gap-2 text-xs sm:text-sm font-mono text-base-content/60 hover:text-primary transition-colors group px-3 py-1.5 rounded-lg hover:bg-base-200/60 w-fit"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="w-4 h-4 transition-transform group-hover:-translate-x-1"
+            class="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
+            stroke-width="2.5"
             stroke-linecap="round"
             stroke-linejoin="round"
           >
             <line x1="19" y1="12" x2="5" y2="12"></line>
             <polyline points="12 19 5 12 12 5"></polyline>
           </svg>
-          <span data-localized data-localized-zh="返回博客列表" data-localized-en="Back to blog">返回博客列表</span>
+          <span data-localized data-localized-zh="cd ~/blog" data-localized-en="cd ~/blog">cd ~/blog</span>
         </a>
       </div>
 
       <!-- Hero Image -->
       {
         heroImage && (
-          <div class="not-prose mb-8 rounded-2xl overflow-hidden border border-base-content/10 shadow-md">
-            <Image width={750} height={422} format="webp" src={heroImage} alt={title} class="w-full h-auto object-cover" />
+          <div class="not-prose mb-8 rounded-2xl overflow-hidden border border-base-content/10 shadow-lg relative group">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10"></div>
+            <Image width={780} height={438} format="webp" src={heroImage} alt={title} class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]" />
           </div>
         )
       }
 
       <!-- Article Header -->
       <header class="not-prose mb-6">
-        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-base-content my-3 leading-tight">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-base-content my-3 leading-tight">
           {title}
         </h1>
 
-        <div class="flex flex-wrap items-center gap-y-2 gap-x-4 text-xs sm:text-sm text-base-content/60 mt-3">
+        <!-- Geek Meta Info Pills -->
+        <div class="flex flex-wrap items-center gap-y-2 gap-x-3 text-xs font-mono text-base-content/65 mt-4">
           {
             pubDate && (
-              <div class="flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-base-200/70 border border-base-content/10">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 opacity-70 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                   <line x1="16" y1="2" x2="16" y2="6"></line>
                   <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -103,26 +108,32 @@ const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 3);
             )
           }
 
-          <div class="flex items-center gap-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-base-200/70 border border-base-content/10">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 opacity-70 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10"></circle>
               <polyline points="12 6 12 12 16 14"></polyline>
             </svg>
             <span
               data-localized
-              data-localized-zh={`约 ${readingStats.minutes} 分钟阅读 · ${readingStats.words} 字`}
-              data-localized-en={`${readingStats.minutes} min read · ${readingStats.words} words`}
+              data-localized-zh={`${readingStats.minutes} 分钟 · ${readingStats.words} 字`}
+              data-localized-en={`${readingStats.minutes} min · ${readingStats.words} words`}
             >
-              约 {readingStats.minutes} 分钟阅读 · {readingStats.words} 字
+              {readingStats.minutes} 分钟 · {readingStats.words} 字
             </span>
           </div>
 
-          {badge && <span class="badge badge-secondary badge-sm font-medium">{badge}</span>}
+          <!-- Obsidian Enhanced Badge -->
+          <div class="flex items-center gap-1 px-2 py-1 rounded-md bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[11px] font-semibold">
+            <span>✦</span>
+            <span>Obsidian</span>
+          </div>
+
+          {badge && <span class="badge badge-secondary badge-sm font-medium font-mono">{badge}</span>}
         </div>
 
         {
           updatedDate && (
-            <div class="text-xs text-base-content/50 mt-2">
+            <div class="text-[11px] font-mono text-base-content/50 mt-2">
               <LocalizedText value={common.lastUpdated} /> <time>{updatedDate}</time>
             </div>
           )
@@ -134,7 +145,7 @@ const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 3);
               {tags.map((tag) => (
                 <a
                   href={`/blog/tag/${tag}`}
-                  class="badge badge-sm badge-ghost border border-base-content/15 text-xs text-base-content/80 hover:border-primary hover:text-primary transition-colors no-underline"
+                  class="badge badge-sm badge-ghost border border-base-content/15 font-mono text-xs text-base-content/80 hover:border-primary hover:text-primary hover:bg-primary/10 transition-all no-underline"
                 >
                   #{tag}
                 </a>
@@ -147,30 +158,27 @@ const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 3);
       <!-- Table of Contents (TOC) -->
       {
         tocHeadings.length > 1 && (
-          <details class="not-prose my-6 rounded-2xl border border-base-content/10 bg-base-100/70 p-4 open:bg-base-100 transition-colors shadow-sm">
+          <details class="not-prose my-6 rounded-2xl border border-base-content/15 bg-base-200/50 backdrop-blur-md p-4 open:bg-base-200/80 transition-all shadow-sm group/toc">
             <summary class="font-bold text-sm flex items-center justify-between cursor-pointer select-none text-base-content hover:text-primary transition-colors">
-              <span class="flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="8" y1="6" x2="21" y2="6"></line>
-                  <line x1="8" y1="12" x2="21" y2="12"></line>
-                  <line x1="8" y1="18" x2="21" y2="18"></line>
-                  <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                  <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                  <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                </svg>
-                <span data-localized data-localized-zh="文章目录" data-localized-en="Table of Contents">文章目录</span>
+              <span class="flex items-center gap-2 font-mono">
+                <span class="text-primary font-bold">#</span>
+                <span data-localized data-localized-zh="文章大纲 (TOC)" data-localized-en="Table of Contents">文章大纲 (TOC)</span>
               </span>
-              <span class="text-xs font-normal opacity-50" data-localized data-localized-zh="点击展开/收起" data-localized-en="Toggle">点击展开/收起</span>
+              <span class="text-xs font-mono font-normal opacity-50 flex items-center gap-1">
+                <span data-localized data-localized-zh="展开/收起" data-localized-en="Toggle">展开/收起</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200 group-open/toc:rotate-180"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </span>
             </summary>
-            <nav class="mt-3 pt-3 border-t border-base-content/10 flex flex-col gap-1 text-sm">
+            <nav class="mt-3 pt-3 border-t border-base-content/10 flex flex-col gap-1 text-sm font-mono">
               {tocHeadings.map((heading) => (
                 <a
                   href={`#${heading.slug}`}
                   data-toc-link
-                  class={`py-1 text-base-content/75 hover:text-primary transition-colors block ${
-                    heading.depth === 1 ? "font-semibold" : heading.depth === 2 ? "pl-3 text-xs sm:text-sm" : "pl-6 text-xs text-base-content/60"
+                  class={`py-1 text-base-content/70 hover:text-primary hover:bg-base-100/50 rounded px-2 transition-colors block ${
+                    heading.depth === 1 ? "font-semibold text-base-content/90" : heading.depth === 2 ? "pl-4 text-xs sm:text-sm" : "pl-7 text-xs text-base-content/55"
                   }`}
                 >
+                  <span class="opacity-40 mr-1.5">{heading.depth === 1 ? "§" : heading.depth === 2 ? "└─" : "  └─"}</span>
                   {heading.text}
                 </a>
               ))}
@@ -179,7 +187,7 @@ const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 3);
         )
       }
 
-      <div class="divider my-4 not-prose border-base-content/10"></div>
+      <div class="divider my-6 not-prose border-base-content/10"></div>
 
       <!-- Main Body -->
       <div class="article-body">
@@ -187,13 +195,13 @@ const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 3);
       </div>
 
       <!-- Post Actions (Share / Back to Top) -->
-      <div class="not-prose mt-10 pt-6 border-t border-base-content/10 flex flex-wrap items-center justify-between gap-3">
+      <div class="not-prose mt-12 pt-6 border-t border-base-content/15 flex flex-wrap items-center justify-between gap-3 font-mono text-xs">
         <button
           type="button"
           id="copy-post-link"
-          class="btn btn-ghost btn-sm gap-2 text-base-content/70 hover:text-primary"
+          class="btn btn-ghost btn-sm gap-2 text-base-content/70 hover:text-primary hover:bg-base-200/80"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
             <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
           </svg>
@@ -203,10 +211,10 @@ const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 3);
         <button
           type="button"
           id="back-to-top"
-          class="btn btn-ghost btn-sm gap-2 text-base-content/70 hover:text-primary"
+          class="btn btn-ghost btn-sm gap-2 text-base-content/70 hover:text-primary hover:bg-base-200/80"
         >
           <span data-localized data-localized-zh="回到顶部" data-localized-en="Back to top">回到顶部</span>
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="18 15 12 9 6 15"></polyline>
           </svg>
         </button>
@@ -215,17 +223,17 @@ const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 3);
       <!-- Previous & Next Posts Navigation Cards -->
       {
         (prevPost || nextPost) && (
-          <nav class="not-prose mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <nav class="not-prose mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono">
             {prevPost ? (
               <a
                 href={"/blog/" + createSlug(prevPost.data.title, prevPost.slug)}
-                class="group rounded-xl border border-base-content/10 bg-base-100/60 hover:bg-base-100 hover:border-base-content/25 p-4 transition-all duration-300 hover:shadow-sm flex flex-col justify-between"
+                class="group rounded-2xl border border-base-content/10 bg-base-100/60 backdrop-blur-sm hover:bg-base-100 hover:border-primary/40 p-4 transition-all duration-300 hover:shadow-md flex flex-col justify-between"
               >
-                <div class="text-xs text-base-content/50 mb-1 flex items-center gap-1">
+                <div class="text-xs text-base-content/50 mb-1 flex items-center gap-1 font-mono">
                   <span>&larr;</span>
-                  <span data-localized data-localized-zh="较早的文章" data-localized-en="Previous Post">较早的文章</span>
+                  <span data-localized data-localized-zh="PREV_POST" data-localized-en="PREV_POST">PREV_POST</span>
                 </div>
-                <div class="font-bold text-sm sm:text-base text-base-content group-hover:text-primary transition-colors line-clamp-2">
+                <div class="font-sans font-bold text-sm sm:text-base text-base-content group-hover:text-primary transition-colors line-clamp-2">
                   {prevPost.data.title}
                 </div>
               </a>
@@ -236,13 +244,13 @@ const tocHeadings = headings.filter((h) => h.depth >= 1 && h.depth <= 3);
             {nextPost ? (
               <a
                 href={"/blog/" + createSlug(nextPost.data.title, nextPost.slug)}
-                class="group rounded-xl border border-base-content/10 bg-base-100/60 hover:bg-base-100 hover:border-base-content/25 p-4 transition-all duration-300 hover:shadow-sm flex flex-col justify-between text-right"
+                class="group rounded-2xl border border-base-content/10 bg-base-100/60 backdrop-blur-sm hover:bg-base-100 hover:border-primary/40 p-4 transition-all duration-300 hover:shadow-md flex flex-col justify-between text-right"
               >
-                <div class="text-xs text-base-content/50 mb-1 flex items-center justify-end gap-1">
-                  <span data-localized data-localized-zh="较新的文章" data-localized-en="Next Post">较新的文章</span>
+                <div class="text-xs text-base-content/50 mb-1 flex items-center justify-end gap-1 font-mono">
+                  <span data-localized data-localized-zh="NEXT_POST" data-localized-en="NEXT_POST">NEXT_POST</span>
                   <span>&rarr;</span>
                 </div>
-                <div class="font-bold text-sm sm:text-base text-base-content group-hover:text-primary transition-colors line-clamp-2">
+                <div class="font-sans font-bold text-sm sm:text-base text-base-content group-hover:text-primary transition-colors line-clamp-2">
                   {nextPost.data.title}
                 </div>
               </a>
