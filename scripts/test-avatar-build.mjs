@@ -33,5 +33,6 @@ assert.ok(
   !indexHtml.includes(settings.shared.profileImage),
   "homepage must not expose the hashed profile image path"
 );
+assert.ok(!indexHtml.includes("<footer"), "homepage footer must be removed");
 
 console.log("stable avatar build valid");
