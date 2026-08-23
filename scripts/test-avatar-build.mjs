@@ -38,5 +38,10 @@ assert.ok(indexHtml.includes('id="blog"'), "sidebar must keep the blog link");
 for (const id of ["home", "projects", "services", "store", "cv"]) {
   assert.ok(!indexHtml.includes(`id="${id}"`), `sidebar must remove the ${id} link`);
 }
+assert.ok(!indexHtml.includes('<div class="py-2">'), "homepage intro block must be hidden");
+assert.ok(
+  !indexHtml.includes("text-3xl w-full font-bold mb-2"),
+  "homepage projects heading must be hidden"
+);
 
 console.log("stable avatar build valid");

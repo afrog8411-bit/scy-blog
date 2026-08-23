@@ -34,12 +34,12 @@
       "greeting": "",
       "name": "施辰阳",
       "headline": "人为自己立规矩然后活着",
-      "intro": "等待填充",
+      "intro": "",
       "connectLabel": "",
       "connectUrl": "",
       "templateLabel": "",
       "templateUrl": "",
-      "projectsHeading": "我的项目 </>",
+      "projectsHeading": "",
       "blogHeading": "最新文章"
     },
     "projects": {
@@ -116,12 +116,12 @@
       "greeting": "",
       "name": "施辰阳",
       "headline": "Make your own rules, then live by them.",
-      "intro": "This is Astrofy, a free and open-source template for your Personal Portfolio Website built with Astro and TailwindCSS.",
+      "intro": "",
       "connectLabel": "",
       "connectUrl": "",
       "templateLabel": "",
       "templateUrl": "",
-      "projectsHeading": "My last projects </>",
+      "projectsHeading": "",
       "blogHeading": "Latest from blog"
     },
     "projects": {
