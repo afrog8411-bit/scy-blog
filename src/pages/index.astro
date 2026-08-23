@@ -4,7 +4,7 @@ import HorizontalCard from "../components/HorizontalCard.astro";
 import { getCollection } from "astro:content";
 import createSlug from "../lib/createSlug";
 import LocalizedText from "../components/LocalizedText.astro";
-import { getLocalized, isLocalizedLinkAvailable } from "../lib/localization";
+import { getLocalized, isLocalizedLinkAvailable, isLocalizedTextAvailable } from "../lib/localization";
 import { localizeSection } from "../lib/siteSettings";
 
 const home = localizeSection("home");
@@ -15,14 +15,18 @@ const lastPosts = posts.slice(0, 3);
 
 <BaseLayout sideBarActiveItemID="home">
   <div class="pb-12 mt-5">
-    <div class="text-xl py-1"><LocalizedText value={home.greeting} /></div>
+    {isLocalizedTextAvailable(home.greeting) && (
+      <div class="text-xl py-1"><LocalizedText value={home.greeting} /></div>
+    )}
     <div class="text-5xl font-bold"><LocalizedText value={home.name} /></div>
     <div class="text-3xl py-3 font-bold"><LocalizedText value={home.headline} /></div>
     <div class="py-2">
       <text class="text-lg"><LocalizedText value={home.intro} /></text>
     </div>
     <div class="mt-8">
-      <a class="btn" href={getLocalized(home.connectUrl)} target="_blank"><LocalizedText value={home.connectLabel} /></a>
+      {isLocalizedLinkAvailable(home.connectLabel) && isLocalizedLinkAvailable(home.connectUrl) && (
+        <a class="btn" href={getLocalized(home.connectUrl)} target="_blank"><LocalizedText value={home.connectLabel} /></a>
+      )}
       {isLocalizedLinkAvailable(home.templateLabel) && isLocalizedLinkAvailable(home.templateUrl) && (
         <a href={getLocalized(home.templateUrl)} target="_blank" class="btn btn-outline ml-5">
           <LocalizedText value={home.templateLabel} />

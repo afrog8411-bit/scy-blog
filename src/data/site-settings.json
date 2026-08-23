@@ -31,12 +31,12 @@
       "usingTemplate": "使用 Astrofy 模板构建"
     },
     "home": {
-      "greeting": "你好 👋",
+      "greeting": "",
       "name": "施辰阳",
       "headline": "人为自己立规矩然后活着",
       "intro": "一个网站",
-      "connectLabel": "联系我",
-      "connectUrl": "2912408387@qq.com",
+      "connectLabel": "",
+      "connectUrl": "",
       "templateLabel": "",
       "templateUrl": "",
       "projectsHeading": "我的项目 </>",
@@ -113,12 +113,12 @@
       "usingTemplate": "using Astrofy Template ⚡️"
     },
     "home": {
-      "greeting": "Hey there 👋",
+      "greeting": "",
       "name": "施辰阳",
       "headline": "Make your own rules, then live by them.",
       "intro": "This is Astrofy, a free and open-source template for your Personal Portfolio Website built with Astro and TailwindCSS.",
-      "connectLabel": "Let's connect!",
-      "connectUrl": "https://twitter.com/manuelernestog",
+      "connectLabel": "",
+      "connectUrl": "",
       "templateLabel": "",
       "templateUrl": "",
       "projectsHeading": "My last projects </>",
