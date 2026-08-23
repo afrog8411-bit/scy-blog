@@ -1,6 +1,6 @@
 ---
 import LocalizedText from "./LocalizedText.astro";
-import { localizeSection, SITE_SETTINGS } from "../lib/siteSettings";
+import { localizeSection } from "../lib/siteSettings";
 
 const { sideBarActiveItemID } = Astro.props;
 const activeClass = "bg-base-300"; // For primary color replace with `active` class
@@ -8,20 +8,7 @@ const navigation = localizeSection("navigation");
 ---
 
 <ul class="menu grow shrink menu-md overflow-y-auto">
-    <li><a class="py-3 text-base" id="home" href="/"><LocalizedText value={navigation.home} /></a></li>
-    <li><a class="py-3 text-base" id="projects" href="/projects"><LocalizedText value={navigation.projects} /></a></li>
-    <li><a class="py-3 text-base" id="services" href="/services"><LocalizedText value={navigation.services} /></a></li>
-    <li><a class="py-3 text-base" id="store" href="/store"><LocalizedText value={navigation.store} /></a></li>
     <li><a class="py-3 text-base" id="blog" href="/blog/"><LocalizedText value={navigation.blog} /></a></li>
-    <li><a class="py-3 text-base" id="cv" href="/cv"><LocalizedText value={navigation.cv} /></a></li>
-    <li>
-        <a
-            class="py-3 text-base"
-            href={`mailto:${SITE_SETTINGS.shared.contactEmail}`}
-            target="_blank"
-            referrerpolicy="no-referrer-when-downgrade"><LocalizedText value={navigation.contact} /></a
-        >
-    </li>
 </ul>
 
 <script define:vars={{ sideBarActiveItemID: sideBarActiveItemID, activeClass: activeClass }}>

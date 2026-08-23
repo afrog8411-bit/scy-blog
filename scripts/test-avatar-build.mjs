@@ -34,5 +34,9 @@ assert.ok(
   "homepage must not expose the hashed profile image path"
 );
 assert.ok(!indexHtml.includes("<footer"), "homepage footer must be removed");
+assert.ok(indexHtml.includes('id="blog"'), "sidebar must keep the blog link");
+for (const id of ["home", "projects", "services", "store", "cv"]) {
+  assert.ok(!indexHtml.includes(`id="${id}"`), `sidebar must remove the ${id} link`);
+}
 
 console.log("stable avatar build valid");
