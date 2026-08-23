@@ -4,7 +4,7 @@ import HorizontalCard from "../components/HorizontalCard.astro";
 import { getCollection } from "astro:content";
 import createSlug from "../lib/createSlug";
 import LocalizedText from "../components/LocalizedText.astro";
-import { getLocalized } from "../lib/localization";
+import { getLocalized, isLocalizedLinkAvailable } from "../lib/localization";
 import { localizeSection } from "../lib/siteSettings";
 
 const home = localizeSection("home");
@@ -23,9 +23,11 @@ const lastPosts = posts.slice(0, 3);
     </div>
     <div class="mt-8">
       <a class="btn" href={getLocalized(home.connectUrl)} target="_blank"><LocalizedText value={home.connectLabel} /></a>
-      <a href={getLocalized(home.templateUrl)} target="_blank" class="btn btn-outline ml-5">
-        <LocalizedText value={home.templateLabel} />
-      </a>
+      {isLocalizedLinkAvailable(home.templateLabel) && isLocalizedLinkAvailable(home.templateUrl) && (
+        <a href={getLocalized(home.templateUrl)} target="_blank" class="btn btn-outline ml-5">
+          <LocalizedText value={home.templateLabel} />
+        </a>
+      )}
     </div>
   </div>
 

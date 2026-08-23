@@ -26,6 +26,12 @@ export function getLocalized(value: LocalizedValue, locale: Locale = DEFAULT_LOC
   return normalized[locale] || normalized[DEFAULT_LOCALE];
 }
 
+export function isLocalizedLinkAvailable(value: LocalizedValue | undefined): boolean {
+  if (value === undefined) return false;
+  const normalized = toLocalized(value);
+  return Boolean(normalized.zh.trim() && normalized.en.trim());
+}
+
 const OPTIONAL_CONTENT_ARRAY_PATHS = new Set([
   "projects.items",
   "services.items",
