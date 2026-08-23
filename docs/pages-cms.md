@@ -1,6 +1,6 @@
 # Pages CMS 编辑说明
 
-Pages CMS 是这个网站的可视化内容编辑入口。它修改仓库里的文件，并通过 GitHub 保存修改；Cloudflare Pages 看到新的提交后会自动重新构建网站。
+Pages CMS 是这个网站的可视化内容编辑入口。它修改仓库里的文件，并通过 GitHub 保存修改；Cloudflare Workers Builds 看到新的提交后会自动重新构建并部署网站。
 
 ## 第一次使用
 
@@ -40,10 +40,10 @@ Pages CMS 是这个网站的可视化内容编辑入口。它修改仓库里的�
 
 1. 在 Pages CMS 中保存修改。
 2. Pages CMS 会在 GitHub 中产生一次提交。
-3. Cloudflare Pages 会自动运行现有的 `pnpm run build`。
-4. 构建成功后，网站会更新。
+3. Cloudflare Workers Builds 会运行 `pnpm run build`，再根据 `wrangler.jsonc` 部署 `dist` 中的静态文件。
+4. 构建和部署都成功后，网站会更新。
 
-不需要手动删除或重新生成 `pnpm-lock.yaml`。也不要在内容编辑流程中修改 `package.json`、`astro.config.mjs` 或 `.pages.yml`。
+不需要手动删除或重新生成 `pnpm-lock.yaml`。也不要在内容编辑流程中修改 `package.json`、`astro.config.mjs`、`wrangler.jsonc` 或 `.pages.yml`。
 
 ## 本地检查
 
@@ -52,6 +52,7 @@ Pages CMS 是这个网站的可视化内容编辑入口。它修改仓库里的�
 ```powershell
 pnpm install --frozen-lockfile
 pnpm run validate:site
+pnpm run test:localization
 pnpm run build
 ```
 

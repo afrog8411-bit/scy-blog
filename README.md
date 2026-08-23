@@ -78,6 +78,7 @@ Blog posts and store items remain single-language Markdown content: write each e
 ├── astro.config.mjs
 ├── tailwind.config.cjs
 ├── package.json
+├── wrangler.jsonc
 └── tsconfig.json
 ```
 
@@ -266,6 +267,8 @@ You can choose among 30 themes available or create your custom theme. See themes
 The Sitemap is generated automatically when you build your website in the root of the domain. Please update the `robots.txt` file in the public folder with your site name URL for the Sitemap.
 
 ## Deploy
+
+This repository is configured as a pre-rendered Astro site deployed through Cloudflare Workers Builds. Cloudflare runs `pnpm run build`, then `npx wrangler deploy`; [`wrangler.jsonc`](wrangler.jsonc) publishes the generated `dist` directory as static assets. Keep the site in Astro's default static mode—no Cloudflare adapter or Worker entry point is required.
 
 You can deploy your site on your favourite static hosting service such as Vercel, Netlify, GitHub Pages, etc.
 
