@@ -593,10 +593,74 @@ export function initCodeBlockHeaders(): void {
         <span class="code-dot bg-warning/80"></span>
         <span class="code-dot bg-success/80"></span>
       </div>
-      <span class="code-lang-badge">${lang}</span>
+      <div class="flex items-center gap-2 pointer-events-auto">
+        <span class="code-lang-badge">${lang}</span>
+        <button type="button" class="copy-code-btn text-[11px] font-mono text-base-content/60 hover:text-primary px-1.5 py-0.5 rounded hover:bg-base-content/10 transition-colors flex items-center gap-1 cursor-pointer" aria-label="Copy code">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          <span class="copy-text">复制</span>
+        </button>
+      </div>
     `;
 
+    const copyBtn = header.querySelector<HTMLButtonElement>(".copy-code-btn");
+    const copyText = header.querySelector<HTMLElement>(".copy-text");
+
+    if (copyBtn && code) {
+      copyBtn.addEventListener("click", async (e) => {
+        e.stopPropagation();
+        try {
+          const textToCopy = code.innerText || code.textContent || "";
+          await navigator.clipboard.writeText(textToCopy.trim());
+          if (copyText) {
+            copyText.textContent = "已复制!";
+            copyBtn.classList.add("text-success");
+            setTimeout(() => {
+              copyText.textContent = "复制";
+              copyBtn.classList.remove("text-success");
+            }, 2000);
+          }
+        } catch {}
+      });
+    }
+
     pre.prepend(header);
+  });
+}
+
+/**
+ * 8.1 Dedicated Prompt Copy Button handler
+ */
+export function initPromptCopyButtons(): void {
+  document.querySelectorAll<HTMLButtonElement>(".copy-prompt-btn").forEach((btn) => {
+    if (btn.dataset.bound === "true") return;
+    btn.dataset.bound = "true";
+
+    btn.addEventListener("click", async () => {
+      const card = btn.closest(".not-prose");
+      const nextPre = (card?.nextElementSibling?.tagName === "PRE" 
+        ? card.nextElementSibling 
+        : card?.parentElement?.querySelector("pre")) as HTMLElement | null;
+      const code = nextPre?.querySelector("code") || nextPre;
+      const text = code?.textContent?.trim() || "";
+
+      if (text) {
+        try {
+          await navigator.clipboard.writeText(text);
+          const textSpan = btn.querySelector<HTMLElement>(".copy-prompt-text");
+          if (textSpan) {
+            const oldText = textSpan.textContent;
+            textSpan.textContent = "✓ 复制成功，去粘贴给 AI 吧！";
+            btn.classList.remove("btn-primary");
+            btn.classList.add("btn-success");
+            setTimeout(() => {
+              textSpan.textContent = oldText;
+              btn.classList.remove("btn-success");
+              btn.classList.add("btn-primary");
+            }, 2500);
+          }
+        } catch {}
+      }
+    });
   });
 }
 
@@ -736,6 +800,7 @@ export function setupAllMarkdownEnhancements(): void {
   initImageResizeAndAlignment();
   initExternalLinks();
   initCodeBlockHeaders();
+  initPromptCopyButtons();
   initImageLightbox();
   initTocScrollSpy();
 }
