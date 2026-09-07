@@ -65,4 +65,4 @@ tags:
     
     - **方法一**：如果你拥有海外支付渠道可以直接点开官网进行充值：[https://chatgpt.com/，充值20USD的plus档次即可](https://chatgpt.com/)
     - **方法二**：使用咸鱼淘宝购买海外的礼品卡进行充值，输入卡号和安全码即可完成支付
-    - **方法三**：直接找我进行代充，微信联系方式：`kingandlonger`
+    - **方法三**：直接找我进行正规渠道代充（支持 ChatGPT Plus、Pro 5X、Pro 20X，提供月质保与售后支持，自备号充值或成品号即用均可），详细套餐价格与开通说明详见：[ChatGPT 官方会员代充开通服务说明](/blog/chatgpt-会员代充开通服务plus--pro-5x--pro-20x/) ，微信联系方式：`kingandlonger`
