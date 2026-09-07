@@ -1,12 +1,12 @@
 {
   "shared": {
-    "brand": "施辰阳",
+    "brand": "a frog",
     "profileImage": "/uploads/ebb5842e2bebacc7e5c842a4b548d222.jpg",
     "contactEmail": "afrog8411@gmail.com",
     "wechat": "kingandlonger"
   },
   "zh": {
-    "siteTitle": "施辰阳| 个人网站",
+    "siteTitle": "a frog | 个人网站",
     "siteDescription": "我的网络小屋",
     "navigation": {
       "home": "首页",
@@ -33,7 +33,7 @@
     },
     "home": {
       "greeting": "",
-      "name": "施辰阳",
+      "name": "a frog",
       "headline": "人为自己立规矩然后活着",
       "intro": "",
       "connectLabel": "",
@@ -115,7 +115,7 @@
     },
     "home": {
       "greeting": "",
-      "name": "施辰阳",
+      "name": "a frog",
       "headline": "Make your own rules, then live by them.",
       "intro": "",
       "connectLabel": "",
