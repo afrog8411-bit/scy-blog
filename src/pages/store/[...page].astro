@@ -15,45 +15,50 @@ const store = localizeSection("store");
 const common = localizeSection("common");
 ---
 
-<BaseLayout title={store.title} sideBarActiveItemID="store">
-  <ul>
+<BaseLayout title={store.title} sideBarActiveItemID="shop">
+  <!-- Page Header -->
+  <div class="mb-6 sm:mb-8 flex items-center justify-between border-b border-base-content/10 pb-3 sm:pb-4">
+    <div class="flex items-center gap-2.5">
+      <span class="w-1.5 h-4 sm:h-5 rounded-full bg-primary"></span>
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-base-content">
+        <LocalizedText value={store.title} />
+      </h1>
+    </div>
+    <span class="text-xs font-mono text-base-content/50" data-localized data-localized-zh="正品保障 · 月质保" data-localized-en="Authentic · Warranty">正品保障 · 月质保</span>
+  </div>
+
+  <div class="space-y-3">
     {
       page.data.map((item) => (
-        <>
-          <HorizontalShopItem
-            title={item.data.title}
-            img={item.data.heroImage}
-            desc={item.data.description}
-            pricing={item.data.pricing}
-            oldPricing={item.data.oldPricing}
-            checkoutUrl={item.data.checkoutUrl}
-            badge={item.data.badge}
-            details={item.data.details}
-            tags={item.data.tags}
-            url={"/store/" + item.slug}
-            custom_link={item.data.custom_link}
-            custom_link_label={item.data.custom_link_label}
-          />
-          <div class="divider my-0" />
-        </>
+        <HorizontalShopItem
+          title={item.data.title}
+          img={item.data.heroImage}
+          desc={item.data.description}
+          pricing={item.data.pricing}
+          oldPricing={item.data.oldPricing}
+          checkoutUrl={item.data.checkoutUrl}
+          badge={item.data.badge}
+          details={item.data.details}
+          tags={item.data.tags}
+          url={"/store/" + item.slug}
+          custom_link={item.data.custom_link}
+          custom_link_label={item.data.custom_link_label}
+        />
       ))
     }
-  </ul>
+  </div>
 
-  <div class="flex justify-between">
+  <div class="flex justify-between mt-8 font-mono text-xs">
     {
       page.url.prev ? (
-        <a href={page.url.prev} class="btn btn-ghost my-10 mx-5">
-          {" "}
+        <a href={page.url.prev} class="btn btn-ghost btn-sm gap-1">
           <svg
-            class="h-6 w-6 fill-current md:h-8 md:w-8"
+            class="h-4 w-4 fill-current"
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
             viewBox="0 0 24 24"
           >
             <path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
-          </svg>{" "}
+          </svg>
           <LocalizedText value={common.previousPage} />
         </a>
       ) : (
@@ -62,16 +67,13 @@ const common = localizeSection("common");
     }
     {
       page.url.next ? (
-        <a href={page.url.next} class="btn btn-ghost my-10 mx-5">
-          <LocalizedText value={common.nextPage} />{" "}
+        <a href={page.url.next} class="btn btn-ghost btn-sm gap-1">
+          <LocalizedText value={common.nextPage} />
           <svg
-            class="h-6 w-6 fill-current md:h-8 md:w-8"
+            class="h-4 w-4 fill-current"
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
             viewBox="0 0 24 24"
           >
-            {" "}
             <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
           </svg>
         </a>

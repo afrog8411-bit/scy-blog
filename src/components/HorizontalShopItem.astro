@@ -12,7 +12,6 @@ const {
   custom_link = false,
   custom_link_label = "",
 } = Astro.props;
-import { Image } from "astro:assets";
 import LocalizedText from "./LocalizedText.astro";
 import { getLocalized, type LocalizedValue } from "../lib/localization";
 const displayTitle = getLocalized(title as LocalizedValue);
@@ -20,32 +19,50 @@ const displayImage = img ? getLocalized(img as LocalizedValue) : undefined;
 const displayBadge = badge ? getLocalized(badge as LocalizedValue) : "";
 ---
 
-<div class="rounded-lg bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%]">
-  <a href={url}>
-    <div class="hero-content flex-col md:flex-row">
-      {
-        displayImage && (
-          <Image
-            width={750}
-            height={422}
-            format="webp"
+<div
+  class="group relative rounded-xl sm:rounded-2xl border border-base-content/10 bg-base-100/60 backdrop-blur-md hover:bg-base-100 hover:border-primary/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 sm:hover:-translate-y-1 overflow-hidden my-2.5 sm:my-3 p-3.5 sm:p-5"
+>
+  <a href={url} class="absolute inset-0 z-0" aria-label={displayTitle}>
+    <span class="sr-only">{displayTitle}</span>
+  </a>
+
+  <!-- Subtle card ambient glow -->
+  <div class="absolute -right-20 -top-20 w-40 h-40 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/15 transition-all duration-500 pointer-events-none"></div>
+
+  <div class="flex flex-col md:flex-row gap-3.5 sm:gap-5 items-start md:items-center relative pointer-events-none z-10">
+    {
+      displayImage && (
+        <div class="relative shrink-0 w-full md:w-56 aspect-[16/9] md:aspect-auto md:h-36 rounded-lg sm:rounded-xl overflow-hidden bg-base-200 border border-base-content/5">
+          <img
             src={displayImage}
             alt={displayTitle}
-            class="max-w-full md:max-w-[13rem] rounded-lg"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+            decoding="async"
           />
-        )
-      }
-      <div class="grow w-full p-5 md:p-0">
-        <h1 class="text-xl font-bold">
-          <LocalizedText value={title as LocalizedValue} />
-          {displayBadge && <div class="badge badge-secondary mx-2"><LocalizedText value={badge as LocalizedValue} /></div>}
-        </h1>
-        <div>
-          <span class="text-xl mr-1"> {pricing}</span>
-          <span class="text-md opacity-50 line-through">{oldPricing}</span>
         </div>
-        <p class="py-1 text-1xl"><LocalizedText value={desc as LocalizedValue} /></p>
+      )
+    }
+    <div class="grow w-full">
+      <div class="flex items-center flex-wrap gap-2 mb-1">
+        <h2 class="text-base sm:text-lg md:text-xl font-bold tracking-tight text-base-content group-hover:text-primary transition-colors leading-snug">
+          <LocalizedText value={title as LocalizedValue} />
+        </h2>
+        {displayBadge && (
+          <span class="badge badge-secondary badge-sm font-medium font-mono text-[10px] sm:text-[11px] px-1.5 py-0.5">
+            <LocalizedText value={badge as LocalizedValue} />
+          </span>
+        )}
       </div>
+
+      <div class="flex items-baseline gap-2 mb-2">
+        <span class="text-lg sm:text-xl font-black text-primary font-mono">{pricing}</span>
+        {oldPricing && <span class="text-xs text-base-content/40 line-through font-mono">{oldPricing}</span>}
+      </div>
+
+      <p class="text-xs sm:text-sm text-base-content/70 line-clamp-2 leading-relaxed font-normal">
+        <LocalizedText value={desc as LocalizedValue} />
+      </p>
     </div>
-  </a>
+  </div>
 </div>
