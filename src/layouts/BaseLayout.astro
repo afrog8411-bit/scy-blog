@@ -3,6 +3,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import SideBar from "../components/SideBar.astro";
 import LanguageSwitch from "../components/LanguageSwitch.astro";
+import ContactModal from "../components/ContactModal.astro";
 import { ViewTransitions } from "astro:transitions";
 
 import { SITE_SETTINGS } from "../lib/siteSettings";
@@ -52,5 +53,6 @@ const {
       </div>
       {includeSidebar && <SideBar sideBarActiveItemID={sideBarActiveItemID} />}
     </div>
+    <ContactModal />
   </body>
 </html>

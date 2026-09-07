@@ -9,6 +9,19 @@ const navigation = localizeSection("navigation");
 
 <ul class="menu grow shrink menu-md overflow-y-auto">
     <li><a class="py-3 text-base" id="blog" href="/blog/"><LocalizedText value={navigation.blog} /></a></li>
+    <li>
+        <button
+            type="button"
+            class="py-3 text-base flex items-center justify-between w-full text-left"
+            id="contact-btn"
+            onclick="const modal = document.getElementById('contact_modal'); if (modal) { modal.showModal(); } const drawer = document.getElementById('my-drawer'); if (drawer && window.innerWidth < 1024) drawer.checked = false;"
+        >
+            <span class="flex items-center gap-2">
+                <LocalizedText value={navigation.contact} />
+            </span>
+            <span class="badge badge-sm badge-ghost font-mono text-[10px] text-emerald-500/90 border-emerald-500/20 bg-emerald-500/10">微信</span>
+        </button>
+    </li>
 </ul>
 
 <script define:vars={{ sideBarActiveItemID: sideBarActiveItemID, activeClass: activeClass }}>
