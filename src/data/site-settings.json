@@ -7,7 +7,7 @@
   },
   "zh": {
     "siteTitle": "a frog | 个人网站",
-    "siteDescription": "我的网络小屋",
+    "siteDescription": "记录 AI 工具、效率系统、Obsidian 与生活实验的个人博客",
     "navigation": {
       "home": "首页",
       "projects": "资源",
@@ -29,13 +29,13 @@
       "home": "首页",
       "notFoundMessage": "找不到你要访问的页面。",
       "developedBy": "网站由",
-      "usingTemplate": "使用 Astrofy 模板构建"
+      "usingTemplate": "由 a frog 维护"
     },
     "home": {
       "greeting": "",
       "name": "a frog",
       "headline": "人为自己立规矩然后活着",
-      "intro": "",
+      "intro": "记录 AI 工具、效率系统、Obsidian 与生活实验，分享能直接上手的方法。",
       "connectLabel": "",
       "connectUrl": "",
       "templateLabel": "",
@@ -88,8 +88,8 @@
     }
   },
   "en": {
-    "siteTitle": "Astrofy | Personal Portfolio Website Template",
-    "siteDescription": "Astrofy is a free and open-source template for your Personal Portfolio Website built with Astro and TailwindCSS.",
+    "siteTitle": "a frog | Personal blog",
+    "siteDescription": "Practical notes on AI tools, personal systems, Obsidian, and experiments in everyday life.",
     "navigation": {
       "home": "Home",
       "projects": "Projects",
@@ -111,13 +111,13 @@
       "home": "Home",
       "notFoundMessage": "The page you're looking for couldn't be found.",
       "developedBy": "Developed by",
-      "usingTemplate": "using Astrofy Template ⚡️"
+      "usingTemplate": "Maintained by a frog"
     },
     "home": {
       "greeting": "",
       "name": "a frog",
       "headline": "Make your own rules, then live by them.",
-      "intro": "",
+      "intro": "Practical notes on AI tools, personal systems, Obsidian, and experiments for everyday life.",
       "connectLabel": "",
       "connectUrl": "",
       "templateLabel": "",

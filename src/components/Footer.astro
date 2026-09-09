@@ -1,8 +1,6 @@
 ---
 const today = new Date();
-import LocalizedText from "./LocalizedText.astro";
-import { localizeSection, SITE_SETTINGS } from "../lib/siteSettings";
-const common = localizeSection("common");
+import { SITE_SETTINGS } from "../lib/siteSettings";
 ---
 
 <footer class="footer footer-center block mb-5 pt-10">
@@ -10,9 +8,8 @@ const common = localizeSection("common");
     &copy; {today.getFullYear()} {SITE_SETTINGS.shared.brand}
   </div>
   <div class="inline opacity-75">
-    <LocalizedText value={common.developedBy} /> <a href="https://manuelernestog.github.io" target="_blank" class="font-bold">{SITE_SETTINGS.shared.brand}</a>
-    <!-- Thanks for using this template. You can keep this line to support my work :) -->
-    <a href="https://astrofy-template.netlify.app/" target="_blank" class="font-bold"><LocalizedText value={common.usingTemplate} /></a>
+    <span data-localized data-localized-zh="联系邮箱：" data-localized-en="Email: ">联系邮箱：</span>
+    <a href={`mailto:${SITE_SETTINGS.shared.contactEmail}`} class="font-bold">{SITE_SETTINGS.shared.contactEmail}</a>
   </div>
 </footer>
 <style></style>

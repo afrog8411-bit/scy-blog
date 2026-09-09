@@ -21,6 +21,9 @@ const {
   custom_link_label,
 } = Astro.props;
 const common = localizeSection("common");
+const optimizedHeroSrcSet = heroImage === "/uploads/chatgpt-vip-service.png"
+  ? "/uploads/chatgpt-vip-service.webp 1400w"
+  : undefined;
 
 dayjs.extend(localizedFormat);
 const displayDate = dayjs(updatedDate).format("YYYY-MM-DD");
@@ -58,7 +61,10 @@ const displayDate = dayjs(updatedDate).format("YYYY-MM-DD");
           <div class="not-prose mb-5 sm:mb-8 rounded-xl sm:rounded-2xl overflow-hidden border border-base-content/10 shadow-md sm:shadow-lg relative aspect-[16/9] sm:aspect-[21/9] max-h-[380px] bg-base-200">
             <img
               src={heroImage}
+              srcset={optimizedHeroSrcSet}
               alt={title}
+              width="1400"
+              height="600"
               class="w-full h-full object-cover transition-transform duration-500 hover:scale-[1.02]"
               loading="eager"
               decoding="async"

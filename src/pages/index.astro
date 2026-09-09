@@ -6,6 +6,7 @@ import createSlug from "../lib/createSlug";
 import LocalizedText from "../components/LocalizedText.astro";
 import { getLocalized, isLocalizedLinkAvailable, isLocalizedTextAvailable } from "../lib/localization";
 import { localizeSection } from "../lib/siteSettings";
+import { calculateReadingTime } from "../lib/readingTime";
 
 const home = localizeSection("home");
 const projects = localizeSection("projects");
@@ -163,6 +164,8 @@ const lastPosts = posts.slice(0, 4);
           target="_self"
           badge={post.data.badge}
           tags={post.data.tags}
+          pubDate={post.data.pubDate}
+          readingTime={calculateReadingTime(post.body).minutes}
         />
       ))
     }

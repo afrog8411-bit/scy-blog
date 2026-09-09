@@ -5,12 +5,13 @@ import { getCollection } from "astro:content";
 import createSlug from "../../../../lib/createSlug";
 import LocalizedText from "../../../../components/LocalizedText.astro";
 import { localizeSection } from "../../../../lib/siteSettings";
+import { calculateReadingTime } from "../../../../lib/readingTime";
 
 export async function getStaticPaths({ paginate }) {
   const all_posts = await getCollection("blog");
-  const all_tags = all_posts.flatMap((post) => {
+  const all_tags = [...new Set(all_posts.flatMap((post) => {
     return post.data.tags || [];
-  });
+  }))];
 
   return all_tags.flatMap((tag) => {
     const filtred_posts = all_posts.filter((post) => {
@@ -55,6 +56,8 @@ const tagTitle = { zh: `${blog.title.zh} - ${params.tag}`, en: `${blog.title.en}
             target="_self"
             badge={post.data.badge}
             tags={post.data.tags}
+            pubDate={post.data.pubDate}
+            readingTime={calculateReadingTime(post.body).minutes}
           />
         ))}
       </div>

@@ -1,5 +1,5 @@
 ---
-const { title, img, desc, url, badge, tags, target = "_blank" } = Astro.props;
+const { title, img, desc, url, badge, tags, pubDate, readingTime, target = "_blank" } = Astro.props;
 import LocalizedText from "./LocalizedText.astro";
 import { getLocalized, type LocalizedValue } from "../lib/localization";
 
@@ -7,12 +7,13 @@ const displayTitle = getLocalized(title as LocalizedValue);
 const displayImage = img ? getLocalized(img as LocalizedValue) : undefined;
 const displayBadge = badge ? getLocalized(badge as LocalizedValue) : "";
 const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
+const displayDate = pubDate ? new Date(pubDate).toISOString().slice(0, 10) : undefined;
 ---
 
 <div
   class="group relative rounded-xl sm:rounded-2xl border border-base-content/10 bg-base-100/60 backdrop-blur-md hover:bg-base-100 hover:border-primary/40 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 sm:hover:-translate-y-1 overflow-hidden my-2.5 sm:my-3 p-3.5 sm:p-5"
 >
-  <a href={url} target={target} class="absolute inset-0 z-0" aria-label={displayTitle}>
+  <a href={url} target={target} rel={target === "_blank" ? "noopener noreferrer" : undefined} class="absolute inset-0 z-0" aria-label={displayTitle}>
     <span class="sr-only">{displayTitle}</span>
   </a>
 
@@ -26,6 +27,8 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           <img
             src={displayImage}
             alt={displayTitle}
+            width="640"
+            height="360"
             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             loading="lazy"
             decoding="async"
@@ -48,6 +51,17 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
       <p class="py-1.5 sm:py-2 text-xs sm:text-sm text-base-content/70 line-clamp-2 leading-relaxed font-normal">
         <LocalizedText value={desc as LocalizedValue} />
       </p>
+
+      {(displayDate || readingTime) && (
+        <div class="flex flex-wrap items-center gap-2 text-[10px] sm:text-[11px] font-mono text-base-content/50">
+          {displayDate && <time datetime={new Date(pubDate).toISOString()}>{displayDate}</time>}
+          {readingTime && (
+            <span data-localized data-localized-zh={`${readingTime} 分钟阅读`} data-localized-en={`${readingTime} min read`}>
+              {readingTime} 分钟阅读
+            </span>
+          )}
+        </div>
+      )}
 
       {tags && tags.length > 0 && (
         <div class="flex flex-wrap gap-1 sm:gap-1.5 mt-1 sm:mt-2 pointer-events-auto relative z-10">

@@ -5,6 +5,7 @@ import { getCollection } from "astro:content";
 import createSlug from "../../lib/createSlug";
 import LocalizedText from "../../components/LocalizedText.astro";
 import { localizeSection } from "../../lib/siteSettings";
+import { calculateReadingTime } from "../../lib/readingTime";
 
 export async function getStaticPaths({ paginate }) {
   const posts = await getCollection("blog");
@@ -41,6 +42,8 @@ const common = localizeSection("common");
             target="_self"
             badge={post.data.badge}
             tags={post.data.tags}
+            pubDate={post.data.pubDate}
+            readingTime={calculateReadingTime(post.body).minutes}
           />
         ))}
       </div>

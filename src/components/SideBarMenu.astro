@@ -5,10 +5,22 @@ import { localizeSection } from "../lib/siteSettings";
 const { sideBarActiveItemID } = Astro.props;
 const activeClass = "bg-base-300"; // For primary color replace with `active` class
 const navigation = localizeSection("navigation");
+const projects = localizeSection("projects");
+const services = localizeSection("services");
+const cv = localizeSection("cv");
+const hasProjects = Array.isArray(projects.items) && projects.items.length > 0;
+const hasServices = Array.isArray(services.items) && services.items.length > 0;
+const hasCv = [cv.education, cv.experience, cv.certifications].some(
+  (items) => Array.isArray(items) && items.length > 0,
+);
 ---
 
 <ul class="menu grow shrink menu-md overflow-y-auto">
+    <li><a class="py-3 text-base" id="home" href="/"><LocalizedText value={navigation.home} /></a></li>
     <li><a class="py-3 text-base" id="blog" href="/blog/"><LocalizedText value={navigation.blog} /></a></li>
+    {hasProjects && <li><a class="py-3 text-base" id="projects" href="/projects/"><LocalizedText value={navigation.projects} /></a></li>}
+    {hasServices && <li><a class="py-3 text-base" id="services" href="/services/"><LocalizedText value={navigation.services} /></a></li>}
+    {hasCv && <li><a class="py-3 text-base" id="cv" href="/cv/"><LocalizedText value={navigation.cv} /></a></li>}
     <li><a class="py-3 text-base" id="shop" href="/store/"><LocalizedText value={navigation.store} /></a></li>
     <li>
         <button

@@ -6,15 +6,13 @@ heroImage: /uploads/chatgpt-store-gpt-1400x932.jpg
 tags:
   - 教程
 ---
-# 如何订阅Codex（Chatgpt）
-
 > [!info] 订阅三步核心流程
 > 订阅Codex分成三步骤：
 > 1. 你要拥有翻墙软件来访问外网
 > 2. 你要注册一个google账号
 > 3. 你要充值Chatgpt的订阅
 
-# 梯子
+## 梯子
 
 - 一：如何获取梯子
     
@@ -40,7 +38,7 @@ tags:
     > 2. 翻墙是为了获取外网更加广阔的视野和视野外界的软件，但是依然不是法外之地，==关于反华言论敏感话题相关的内容请勿进行评论，转发，以及复制粘贴（你的剪切板是会被别的软件检测到的）==，进行正常的使用是没有任何问题。
     > 3. 恭喜你现在解锁了世界范围的互联网！
 
-# Google邮箱
+## Google邮箱
 
 推荐使用谷歌的浏览器：Chrome，便于登录谷歌账号官网下载链接：[https://www.google.cn/intl/zh-CN/chrome/](https://www.google.cn/intl/zh-CN/chrome/)
 
@@ -55,7 +53,7 @@ tags:
     > 2. 打开官网 [https://accounts.google.com/](https://accounts.google.com/)，点击创建账号之后按顺序填写信息即可
     > 3. 账号绑定手机号和辅助邮箱更加稳定，绑定手机号左侧选择中国（+86）填写国内的手机号即可，可以正常接验证码，辅助邮箱也可以选择国内邮箱，比如qq邮箱
 
-# 充值GPT订阅
+## 充值GPT订阅
 
 - 一：为什么要充值
     
