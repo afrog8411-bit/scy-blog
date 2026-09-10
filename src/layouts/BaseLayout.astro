@@ -17,6 +17,9 @@ interface Props {
   includeSidebar?: boolean;
   sideBarActiveItemID?: string;
   ogType?: string;
+  publishedTime?: Date | string;
+  modifiedTime?: Date | string;
+  author?: string;
 }
 
 const {
@@ -26,13 +29,24 @@ const {
   includeSidebar = true,
   sideBarActiveItemID,
   ogType,
+  publishedTime,
+  modifiedTime,
+  author,
 } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="zh-CN" data-language="zh" data-theme="lofi">
   <head>
-    <BaseHead title={title} description={description} image={image} ogType={ogType} />
+    <BaseHead
+      title={title}
+      description={description}
+      image={image}
+      ogType={ogType}
+      publishedTime={publishedTime}
+      modifiedTime={modifiedTime}
+      author={author}
+    />
     {TRANSITION_API && <ViewTransitions />}
   </head>
   <body class="relative min-h-screen bg-base-100 selection:bg-primary/20 selection:text-primary overflow-x-hidden antialiased">

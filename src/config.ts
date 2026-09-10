@@ -5,5 +5,6 @@ import { SITE_SETTINGS } from './lib/siteSettings';
 
 export const SITE_TITLE = SITE_SETTINGS.zh.siteTitle;
 export const SITE_DESCRIPTION = SITE_SETTINGS.zh.siteDescription;
-export const GENERATE_SLUG_FROM_TITLE = true
+// Keep blog URLs tied to the content filename so title edits do not break links.
+export const GENERATE_SLUG_FROM_TITLE = false
 export const TRANSITION_API = true
